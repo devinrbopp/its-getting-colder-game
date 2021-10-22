@@ -9,17 +9,23 @@ it's getting colder is a text-based clicker with a timeline. You have one year t
 *it's getting colder* utilizes HTML, CSS and Javascript to handle interactions and logic. The primary method of interacting will be through a series of buttons. The game will also include an HTML canvas, which displays your burgeoning community.
 
 ### Wireframes
+![Wireframe 1](wireframes/wireframe-1.jpeg)
+Title and instructions, with a button to start the game by taking the first action.
 
+![Wireframe 2](wireframes/wireframe-2.jpeg)
+Primary game layout will consist of a series of buttons allowing you to take actions, a console where you will be notified of the seasonal 'events,' a canvas that displays your community, and a progress bar/timeline that shows how close you are to the end of the game.
 
 
 ### MVP Goals
 * a year of gameplay, consisting of three 'events' per season
+* the option to name your community and other elements as they are added
 * branching story events, based on player decisions during each event
 * a system of iterators that generate resources based on the contents of the community
 * a basic HTML canvas that displays the contents of the village
 * randomly generated win conditions upon reaching the end of the timeline
-* snow animation on canvas
+* basic sound effects triggered by events
 
 ### Stretch Goals
 * basic 'physics' for the canvas, so that items drop in from the top
-* longer seasons, perhaps with the option to select the number of events for season
+* longer seasons, with the option to select the number of events per season
+* snow animation on the canvas as winter approaches

@@ -3,10 +3,12 @@
 
 It is spring, and your community has just weathered a devastating winter. Now, to rebuild.
 
-it's getting colder is a text-based clicker with a timeline. You have one year to build and assemble resources to prepare for the winter to come. When it arrives, randomly generated conditions will determine whether you have survived.
+*it's getting colder* is a text-based clicker with a timeline. You have one year to build and assemble resources to prepare for the winter to come. When it arrives, randomly generated conditions will determine whether you have survived.
 
 ### Technologies
-*it's getting colder* utilizes HTML, CSS and Javascript to handle interactions and logic. The primary method of interacting will be through a series of buttons. The game will also include an HTML canvas, which displays your burgeoning community.
+*it's getting colder* utilizes HTML5, CSS, and Vanilla Javascript to handle interactions and logic. The primary method of interacting will be through a series of buttons. The game will also include an HTML canvas, which displays your burgeoning community.
+
+Layout is handed with CSS Grid.
 
 ### Wireframes
 ![Wireframe 1](wireframes/wireframe-1.jpeg)
@@ -22,10 +24,11 @@ Primary game layout will consist of a series of buttons allowing you to take act
 * branching story events, based on player decisions during each event
 * a system of iterators that generate resources based on the contents of the community
 * a basic HTML canvas that displays the contents of the village
-* randomly generated win conditions upon reaching the end of the timeline
+* randomly second one of two win conditions at the end of the game, and notify the player of whether they won
 * basic sound effects triggered by events
 
 ### Stretch Goals
 * basic 'physics' for the canvas, so that items drop in from the top
 * longer seasons, with the option to select the number of events per season
+* more potential win conditions, influenced by player decisions during events
 * snow animation on the canvas as winter approaches

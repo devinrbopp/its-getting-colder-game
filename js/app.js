@@ -12,10 +12,22 @@ const shelterTutorial = () => {
 
 const startTimer = () => {
     console.log('timer started')
-    setInterval(()=>{
+    const timerMechanism = setInterval(()=>{
         console.log(timer)
+        if (timer < 25) {
+            console.log('spring')
+        } else if (timer >= 25 && timer < 50) {
+            console.log('summer')
+        } else if (timer >= 50 && timer < 75) {
+            console.log('fall')
+        } else if (timer >= 75 && timer < 100) {
+            console.log('it\'s getting colder....')
+        } else if (timer == 100) {
+            console.log('game over')
+            clearInterval(timerMechanism)
+        }
         timer++
-    },1000)
+    },10000)
 }
 
 

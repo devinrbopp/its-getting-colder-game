@@ -1,3 +1,10 @@
 body {
     font-family: helvetica;
+    background-color: #525252;
+    color: whitesmoke;
+    margin: 100px;
+}
+
+div {
+    margin: 10px
 }

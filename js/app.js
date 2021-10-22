@@ -1,19 +1,22 @@
 let shelters = 0
+let farmPlots = 0
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('dom content loaded')
     buildShelter.addEventListener('click', () => {
         shelters++
         if (shelters == 1) {
-            const shelterDiv = document.createElement('div')
-            shelterDiv.innerText = `shelters: ${shelters}`
-            shelterCounter.appendChild(shelterDiv)
+            shelterNum.innerText = shelters
         } else {
-            shelterCounter.removeChild(shelterCounter.childNodes[0])
-            const shelterDiv = document.createElement('div')
-            shelterDiv.innerText = `shelters: ${shelters}`
-            console.log('shelters:', shelters)
-            shelterCounter.appendChild(shelterDiv)
+            shelterNum.innerText = shelters
+        }
+    })
+    buildFarmPlot.addEventListener('click', () => {
+        farmPlots++
+        if (farmPlots == 1) {
+            farmPlotNum.innerText = farmPlots
+        } else {
+            farmPlotNum.innerText = farmPlots
         }
     })
 })

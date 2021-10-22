@@ -1,5 +1,5 @@
 // global variables
-let timer = 0
+let timer = 1
 let season = 'spring'
 let shelters = 0
 let farmPlots = 0
@@ -9,13 +9,21 @@ const shelterTutorial = () => {
     if (shelters == 5) {
         console.log('5 shelters built')
         startTimer()
+        window.removeEventListener('click',shelterTutorial)
     }
 }
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
     console.log('timer started')
+    seasonDisplay.innerText = `${season}, ${Math.floor(timer)}%`
     const timerMechanism = setInterval(()=>{
+        if (timer < 75) {
+            timer++
+        } else {
+            timer += 1.5
+        }
+        seasonDisplay.innerText = `${season}, ${Math.floor(timer)}%`
         console.log(timer)
         if (timer < 25) {
             console.log('spring')
@@ -29,21 +37,18 @@ const startTimer = () => {
         } else if (timer >= 75 && timer < 100) {
             console.log('it\'s getting colder....')
             season = 'it\'s getting colder'
-        } else if (timer == 100) {
+        } else if (timer >= 100) {
             console.log('game over')
             clearInterval(timerMechanism)
+            seasonDisplay.innerText = 'Winter is here.'
         }
-        timer++
-        
-    },10000)
+    },7000)
 }
 
 
 document.addEventListener('DOMContentLoaded', () => {
     // build shelter event listener
-    window.addEventListener('click', () => {
-        shelterTutorial()
-    })
+    window.addEventListener('click',shelterTutorial)
     buildShelter.addEventListener('click', () => {
         shelters++
         shelterNum.innerText = shelters

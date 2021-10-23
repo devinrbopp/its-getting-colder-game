@@ -13,6 +13,15 @@ const shelterTutorial = () => {
     }
 }
 
+// simple win check placeholder
+const winCheck = () => {
+    if (farmPlots > 14) {
+        console.log('you win')
+    } else {
+        console.log('you lose')
+    }
+}
+
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
     console.log('timer started')
@@ -41,8 +50,9 @@ const startTimer = () => {
             console.log('game over')
             clearInterval(timerMechanism)
             seasonDisplay.innerText = 'Winter is here.'
+            winCheck()
         }
-    },7000)
+    },500)
 }
 
 

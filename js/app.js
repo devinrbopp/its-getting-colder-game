@@ -3,24 +3,37 @@ let timer = 1
 let season = 'spring'
 let shelters = 0
 let farmPlots = 0
+let food = 100
 
 // display a message when 5 shelters are built
 const shelterTutorial = () => {
     if (shelters == 5) {
         console.log('5 shelters built')
         startTimer()
+        // this will need to change later--don't want to use removeEventListener
         window.removeEventListener('click',shelterTutorial)
     }
 }
 
 // simple win check placeholder
 const winCheck = () => {
-    if (farmPlots > 14) {
+    if (food > 10 && shelters > 10) {
         console.log('you win')
     } else {
         console.log('you lose')
     }
 }
+
+// intervals for initiation later
+const foodInterval = setInterval(()=> {
+        console.log(farmPlots)
+        food += (farmPlots * .002)
+        console.log(food)
+        foodNum.innerText = `${Math.floor(food)}`
+    }, 10)
+
+// generateFood creates .2 food per farm plot per second
+
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
@@ -48,24 +61,33 @@ const startTimer = () => {
             season = 'it\'s getting colder'
         } else if (timer >= 100) {
             console.log('game over')
+            seasonDisplay.innerText = 'winter is here.'
+            // scope 
+            clearInterval(foodInterval)
             clearInterval(timerMechanism)
-            seasonDisplay.innerText = 'Winter is here.'
             winCheck()
         }
-    },500)
+    },5000)
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // build shelter event listener
     window.addEventListener('click',shelterTutorial)
     buildShelter.addEventListener('click', () => {
-        shelters++
-        shelterNum.innerText = shelters
-        })
+        if (food >= 10) {
+            shelters++
+            shelterNum.innerText = shelters
+            food-=10
+        } else {
+            console.log('you need more food to do that')
+        }
+    })
     // build farm plot event listener
     buildFarmPlot.addEventListener('click', () => {
-        farmPlots++
-        farmPlotNum.innerText = farmPlots
-        })
+        if (food >= 10) {
+            farmPlots++
+            farmPlotNum.innerText = farmPlots
+            food-=10
+        }
+    })
 })

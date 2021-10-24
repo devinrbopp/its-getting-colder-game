@@ -2,7 +2,13 @@
 let timer = 1
 let season = 'spring'
 
+/*
+=========BUILDABLE ITEMS=========
+*/
 const build = {
+    population: {
+        count: 0
+    },
     food: {
         count: 0,
         cost: 0,
@@ -18,6 +24,18 @@ const build = {
         cost: 10,
         winPoints: 2
     }
+}
+
+/*
+=========USEFUL FUNCTIONS=========
+*/
+
+// intervalRandomizer creates the sense that something occurs at random intervals
+// it triggers setTimeout using setInterval
+const intervalRandomizer = (func, avgTime, maxDelay) => {
+    setInterval( () => {
+        setTimeout(func,(Math.random() * maxDelay))
+    }, avgTime)
 }
 
 
@@ -41,12 +59,27 @@ const winCheck = () => {
 }
 
 // intervals for initiation later
+// interval at which farms produce food
 const foodInterval = setInterval(()=> {
-        // console.log(farmPlots)
-        build.food.count += (build.farmPlot.count * .002)
-        // console.log(food)
-        foodNum.innerText = `${Math.floor(build.food.count)}`
-    }, 10)
+    // console.log(farmPlots)
+    build.food.count += (build.farmPlot.count * .002)
+    // console.log(food)
+    foodNum.innerText = `${Math.floor(build.food.count)}`
+}, 10)
+
+// intervals at which people move into shelters (every 10 seconds)
+const addPerson = () =>{
+    if (build.population.count < build.shelter.count * 5) {
+        build.population.count++
+        console.log('population',build.population.count)
+    }
+}
+
+intervalRandomizer(addPerson, 10000, 5000)
+
+// const populationInterval = setInterval(() => {
+//     setTimeout(addPerson,(Math.random() * 20000))
+// }, 20000)
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
@@ -84,11 +117,13 @@ const startTimer = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // build shelter event listener
+    // event listener to mark end of tutorial and start of timer
     window.addEventListener('click',shelterTutorial)
+    // gather food event listener
     gatherFood.addEventListener('click', () => {
         build.food.count++
     })
+    // build shelter event listener
     buildShelter.addEventListener('click', () => {
         if (build.food.count >= build.shelter.cost) {
             build.shelter.count++

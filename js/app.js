@@ -3,7 +3,18 @@ let timer = 1
 let season = 'spring'
 let shelters = 0
 let farmPlots = 0
-let food = 100
+let food = 0
+
+const builds = {
+    shelter: {
+        cost: 10,
+        winPoints: 1
+    },
+    farmPlot: {
+        cost: 10,
+        winPoints: 2
+    }
+}
 
 // display a message when 5 shelters are built
 const shelterTutorial = () => {
@@ -31,9 +42,6 @@ const foodInterval = setInterval(()=> {
         console.log(food)
         foodNum.innerText = `${Math.floor(food)}`
     }, 10)
-
-// generateFood creates .2 food per farm plot per second
-
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
@@ -73,21 +81,24 @@ const startTimer = () => {
 document.addEventListener('DOMContentLoaded', () => {
     // build shelter event listener
     window.addEventListener('click',shelterTutorial)
+    gatherFood.addEventListener('click', () => {
+        food++
+    })
     buildShelter.addEventListener('click', () => {
-        if (food >= 10) {
+        if (food >= builds.shelter.cost) {
             shelters++
             shelterNum.innerText = shelters
-            food-=10
+            food-=builds.shelter.cost
         } else {
             console.log('you need more food to do that')
         }
     })
     // build farm plot event listener
     buildFarmPlot.addEventListener('click', () => {
-        if (food >= 10) {
+        if (food >= builds.farmPlot.cost) {
             farmPlots++
             farmPlotNum.innerText = farmPlots
-            food-=10
+            food-=builds.farmPlot.cost
         }
     })
 })

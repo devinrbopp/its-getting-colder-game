@@ -32,15 +32,6 @@ const build = {
 ============================EVENT SCENARIOS=============================
 */
 const scenarios = {
-    testScenario: {
-        alertText: 'This is scenario 1',
-        buttonOneText: 'This is choice 1',
-        buttonTwoText: 'This is choice 2',
-        choiceOneResultText: 'You chose 1',
-        choiceTwoResultText: 'You chose 2',
-        choiceOneFunction: () => {console.log('choice 1')},
-        choiceTwoFunction: () => {console.log('choice 2')},
-    },
     crows: {
         alertText: 'crows are eating your crops',
         buttonOneText: 'scare them away',
@@ -49,20 +40,18 @@ const scenarios = {
         choiceTwoResultText: `the crow god smiles upon you\nlose half of your food & gain the favor of the crows`,
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {
-            build.food.count = Math.floor(build.food.count/2)
+            build.food.count /= 2
             crowsFavor = true
-            console.log(crowsFavor)
         }
     },
     summerFarming: {
-        alertText: 'summer is here. what will you grow',
+        alertText: 'what will you grow in your farms',
         buttonOneText: 'strawberries',
         buttonTwoText: 'potatoes',
         choiceOneResultText: 'you enjoy the delicious red fruit',
         choiceTwoResultText: 'a practical choice. you can store them for the winter\nfood production speed doubled',
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {build.farmPlot.rate *= 2}
-
     },
     crowsGift: {
         alertText: 'the crows have returned to repay your gift--a plethora of rabbits, perfect for jerky',

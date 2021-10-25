@@ -26,7 +26,19 @@ const build = {
         winPoints: 2
     }
 }
-
+/*
+=====EVENT SCENARIOS=====
+*/
+const scenarios = {
+    scenarioOne: {
+        alertText: 'This is scenario 1',
+        buttonOneText: 'This is choice 1',
+        buttonTwoText: 'This is choice 2',
+        choiceOneResultText: 'You chose 1',
+        choiceTwoResultText: 'You chose 2',
+        timeout: 3000
+    }
+}
 /*
 =========REUSABLE FUNCTIONS=========
 */
@@ -39,6 +51,43 @@ const intervalRandomizer = (func, avgTime, maxDelay) => {
             setTimeout(func,(Math.random() * maxDelay))
         }
     }, avgTime)
+}
+
+// alert function
+const createScenario = (scenarioNumber) => {
+    setTimeout(() => {
+        // alerts pause the game
+        isPaused =  true
+        // and display a message with two choices
+        alertP.innerText = scenarioNumber.alertText
+        const choice1 = document.createElement('button')
+        choice1.innerText = scenarioNumber.buttonOneText
+        const choice2 = document.createElement('button')
+        choice2.innerText = scenarioNumber.buttonTwoText
+        alertDiv.appendChild(choice1)
+        alertDiv.appendChild(choice2)
+        // event listeners for choices 
+        choice1.addEventListener('click', () => {
+            // console.log('you chose choice one')
+            isPaused = false
+            alertP.innerText = scenarioNumber.choiceOneResultText
+            alertDiv.removeChild(choice1)
+            alertDiv.removeChild(choice2)
+            setTimeout(() => {
+                alertP.innerText = ''
+            }, 7000)
+        })
+        choice2.addEventListener('click', () => {
+            // console.log('you chose choice two')
+            isPaused = false
+            alertP.innerText = scenarioNumber.choiceTwoResultText
+            alertDiv.removeChild(choice1)
+            alertDiv.removeChild(choice2)
+            setTimeout(() => {
+                alertP.innerText = ''
+            }, 7000)
+        })
+    }, scenarioNumber.timeout)
 }
 
 /*
@@ -144,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (build.food.count >= build.shelter.cost) {
                 build.shelter.count++
                 shelterNum.innerText = build.shelter.count
-                build.food.count-=build.shelter.cost
+                build.food.count -= build.shelter.cost
             }
         }
     })
@@ -155,22 +204,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (build.food.count >= build.farmPlot.cost) {
                 build.farmPlot.count++
                 farmPlotNum.innerText = build.farmPlot.count
-                build.food.count-=build.farmPlot.cost
+                build.food.count -= build.farmPlot.cost
             }
         }
     })
 
-    // dummy alert for testing
-    setTimeout(() => {
-        alertP.innerText = 'here is an alert'
-        const choice1 = document.createElement('button')
-        choice1.innerText='choice one'
-        const choice2 = document.createElement('button')
-        choice2.innerText='choice two'
-        alertDiv.appendChild(choice1)
-        alertDiv.appendChild(choice2)
-    }, 2000)
-
+    createScenario(scenarios.scenarioOne)
+    
     // pause button
     pause.addEventListener('click', () => {
         if (!isPaused) {

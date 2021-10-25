@@ -1,11 +1,12 @@
-// GLOBAL VARIABLES
+/*
+==========================GLOBAL VARIABLES==========================
+*/
 let timer = 1
 let season = 'spring'
 let isPaused = false
 let crowsFavor = false
-/*
-=========BUILDABLE ITEMS=========
-*/
+
+// buildable items
 const build = {
     population: {
         count: 0
@@ -28,7 +29,7 @@ const build = {
     }
 }
 /*
-=====EVENT SCENARIOS=====
+============================EVENT SCENARIOS=============================
 */
 const scenarios = {
     testScenario: {
@@ -69,13 +70,13 @@ const scenarios = {
         buttonTwoText: 'we are in your debt',
         choiceOneResultText: 'caw',
         choiceTwoResultText: 'caw caw',
-        choiceOneFunction: () => {build.food.count *= 1.25},
-        choiceTwoFunction: () => {build.food.count *= 1.25}
-
+        choiceOneFunction: () => {build.food.count *= 1.5},
+        choiceTwoFunction: () => {build.food.count *= 1.5}
     }
 }
+
 /*
-=========REUSABLE FUNCTIONS=========
+===========================REUSABLE FUNCTIONS===========================
 */
 
 // intervalRandomizer creates the sense that something occurs at random intervals
@@ -136,7 +137,7 @@ const createScenario = (scenarioNumber) => {
 // }
 
 /*
-=====GAME FUNCTIONS=====
+=================================GAME FUNCTIONS=================================
 */
 
 // display a message when 5 shelters are built
@@ -158,7 +159,7 @@ const winCheck = () => {
     }
 }
 
-// interval at which farms produce food
+// interval at which farms produce food; starts here with the start of the game
 const foodInterval = setInterval(()=> {
     if (!isPaused) {
         // console.log(farmPlots)
@@ -179,7 +180,6 @@ const addPerson = () =>{
     }
 }
 
-intervalRandomizer(addPerson, 7000, 3000)
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
@@ -209,9 +209,7 @@ const startTimer = () => {
             } else if (timer >= 100) {
                 console.log('game over')
                 seasonDisplay.innerText = 'winter is here.'
-                // scope 
-                clearInterval(foodInterval)
-                clearInterval(timerMechanism)
+                isPaused = true
                 winCheck()
             }
         }
@@ -219,11 +217,13 @@ const startTimer = () => {
 }
 
 /*
-=====EVENT LISTENERS=====
+===========================EVENT LISTENERS, ALERT INTERVALS, AND FUNCTION CALLS===========================
 */
 document.addEventListener('DOMContentLoaded', () => {
     // event listener to mark end of tutorial and start of timer
     window.addEventListener('click',shelterTutorial)
+    // starts the interval for population increase
+    intervalRandomizer(addPerson, 7000, 3000)
     
     // gather food event listener
     gatherFood.addEventListener('click', () => {
@@ -231,8 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
             build.food.count++
         }
     })
-
-    // make build shelter button appear
+    
+    // make build shelter button appear after 10 food are gathered
     const addBuildShelter = setInterval(() => {
         if (build.food.count >= 10) {
             const buildShelterButton = document.createElement('button')
@@ -252,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(addBuildShelter)
         }
     }, 10)
-    
 
+    // make build farm plot appear after 3 shelters are built
     const addBuildFarmPlot = setInterval(() => {
         if (build.shelter.count >= 3) {
             const buildFarmPlotButton = document.createElement('button')
@@ -286,8 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //     console.log('the game is paused:',isPaused)
     // })
 
+    // listen for curcumstances to be met for events
     const crowsCheck = setInterval(() => {
-        if (build.farmPlot.count == 2) {
+        if (build.farmPlot.count >= 2) {
             createScenario(scenarios.crows)
             clearInterval(crowsCheck)
         }

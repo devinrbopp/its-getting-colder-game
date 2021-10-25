@@ -35,7 +35,9 @@ const build = {
 // it triggers setTimeout using setInterval
 const intervalRandomizer = (func, avgTime, maxDelay) => {
     setInterval( () => {
-        setTimeout(func,(Math.random() * maxDelay))
+        if (!isPaused) {
+            setTimeout(func,(Math.random() * maxDelay))
+        }
     }, avgTime)
 }
 
@@ -64,18 +66,22 @@ const winCheck = () => {
 // intervals for initiation later
 // interval at which farms produce food
 const foodInterval = setInterval(()=> {
-    // console.log(farmPlots)
-    build.food.count += (build.farmPlot.count * .002)
-    // console.log(food)
-    foodNum.innerText = `${Math.floor(build.food.count)}`
+    if (!isPaused) {
+        // console.log(farmPlots)
+        build.food.count += (build.farmPlot.count * .002)
+        // console.log(food)
+        foodNum.innerText = `${Math.floor(build.food.count)}`
+    }
 }, 10)
 
 // intervals at which people move into shelters (every 10 seconds)
 const addPerson = () =>{
-    if (build.population.count < build.shelter.count * 5) {
-        build.population.count++
-        // console.log('population',build.population.count)
-        populationNum.innerText = build.population.count
+    if (!isPaused) {
+        if (build.population.count < build.shelter.count * 5) {
+            build.population.count++
+            // console.log('population',build.population.count)
+            populationNum.innerText = build.population.count
+        }
     }
 }
 
@@ -92,7 +98,7 @@ const startTimer = () => {
             } else {
                 timer += 1.5
             }
-            seasonDisplay.innerText = `${season}, ${Math.floor(timer)}%`
+            seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
             // console.log(timer)
             if (timer < 25) {
                 // console.log('spring')
@@ -127,33 +133,52 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // gather food event listener
     gatherFood.addEventListener('click', () => {
-        build.food.count++
+        if (!isPaused) {
+            build.food.count++
+        }
     })
 
     // build shelter event listener
     buildShelter.addEventListener('click', () => {
-        if (build.food.count >= build.shelter.cost) {
-            build.shelter.count++
-            shelterNum.innerText = build.shelter.count
-            build.food.count-=build.shelter.cost
+        if (!isPaused) {
+            if (build.food.count >= build.shelter.cost) {
+                build.shelter.count++
+                shelterNum.innerText = build.shelter.count
+                build.food.count-=build.shelter.cost
+            }
         }
     })
 
     // build farm plot event listener
     buildFarmPlot.addEventListener('click', () => {
-        if (build.food.count >= build.farmPlot.cost) {
-            build.farmPlot.count++
-            farmPlotNum.innerText = build.farmPlot.count
-            build.food.count-=build.farmPlot.cost
+        if (!isPaused) {
+            if (build.food.count >= build.farmPlot.cost) {
+                build.farmPlot.count++
+                farmPlotNum.innerText = build.farmPlot.count
+                build.food.count-=build.farmPlot.cost
+            }
         }
     })
+
+    // dummy alert for testing
+    setTimeout(() => {
+        alertP.innerText = 'here is an alert'
+        const choice1 = document.createElement('button')
+        choice1.innerText='choice one'
+        const choice2 = document.createElement('button')
+        choice2.innerText='choice two'
+        alertDiv.appendChild(choice1)
+        alertDiv.appendChild(choice2)
+    }, 2000)
 
     // pause button
     pause.addEventListener('click', () => {
         if (!isPaused) {
             isPaused = true
+            pause.innerText = 'unpause'
         } else {
             isPaused = false
+            pause.innerText = 'pause'
         }
         console.log('the game is paused:',isPaused)
     })

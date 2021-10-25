@@ -32,3 +32,5 @@ Primary game layout will consist of a series of buttons allowing you to take act
 * longer seasons, with the option to select the number of events per season
 * more potential win conditions, influenced by player decisions during events
 * snow animation on the canvas as winter approaches
+
+#### Bugs

@@ -254,28 +254,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10)
     
 
-    // build farm plot event listener
-    buildFarmPlot.addEventListener('click', () => {
-        if (!isPaused) {
-            if (build.food.count >= build.farmPlot.cost) {
-                build.farmPlot.count++
-                farmPlotNum.innerText = build.farmPlot.count
-                build.food.count -= build.farmPlot.cost
-            }
+    const addBuildFarmPlot = setInterval(() => {
+        if (build.shelter.count >= 3) {
+            const buildFarmPlotButton = document.createElement('button')
+            buildFarmPlotButton.setAttribute('id', 'buildFarmPlot')
+            buildFarmPlotButton.innerText = 'build farm plot'
+            controls.appendChild(buildFarmPlotButton)
+            // build farm plot event listener
+            buildFarmPlot.addEventListener('click', () => {
+                if (!isPaused) {
+                    if (build.food.count >= build.farmPlot.cost) {
+                        build.farmPlot.count++
+                        farmPlotNum.innerText = build.farmPlot.count
+                        build.food.count -= build.farmPlot.cost
+                    }
+                }
+            })
+            clearInterval(addBuildFarmPlot)
         }
     })
     
     // pause button
-    pause.addEventListener('click', () => {
-        if (!isPaused) {
-            isPaused = true
-            pause.innerText = 'unpause'
-        } else {
-            isPaused = false
-            pause.innerText = 'pause'
-        }
-        console.log('the game is paused:',isPaused)
-    })
+    // pause.addEventListener('click', () => {
+    //     if (!isPaused) {
+    //         isPaused = true
+    //         pause.innerText = 'unpause'
+    //     } else {
+    //         isPaused = false
+    //         pause.innerText = 'pause'
+    //     }
+    //     console.log('the game is paused:',isPaused)
+    // })
 
     const crowsCheck = setInterval(() => {
         if (build.farmPlot.count == 2) {

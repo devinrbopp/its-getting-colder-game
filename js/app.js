@@ -2,7 +2,7 @@
 let timer = 1
 let season = 'spring'
 let isPaused = false
-
+let crowsFavor = false
 /*
 =========BUILDABLE ITEMS=========
 */
@@ -23,7 +23,8 @@ const build = {
     farmPlot: {
         count: 0,
         cost: 10,
-        winPoints: 2
+        winPoints: 2,
+        rate: .002
     }
 }
 /*
@@ -39,14 +40,38 @@ const scenarios = {
         choiceOneFunction: () => {console.log('choice 1')},
         choiceTwoFunction: () => {console.log('choice 2')},
     },
-    scenarioOne: {
+    crows: {
         alertText: 'crows are eating your crops',
         buttonOneText: 'scare them away',
         buttonTwoText: 'let them eat',
         choiceOneResultText: 'the crows are mad',
-        choiceTwoResultText: 'the crow god smiles upon you',
+        choiceTwoResultText: `the crow god smiles upon you\nlose half of your food & gain the favor of the crows`,
         choiceOneFunction: () => {console.log('no change')},
-        choiceTwoFunction: () => {build.food.count - Math.floor(build.food.count/2)}
+        choiceTwoFunction: () => {
+            build.food.count = Math.floor(build.food.count/2)
+            crowsFavor = true
+            console.log(crowsFavor)
+        }
+    },
+    summerFarming: {
+        alertText: 'summer is here. what will you grow',
+        buttonOneText: 'strawberries',
+        buttonTwoText: 'potatoes',
+        choiceOneResultText: 'you enjoy the delicious red fruit',
+        choiceTwoResultText: 'a practical choice. you can store them for the winter\nfood production speed doubled',
+        choiceOneFunction: () => {console.log('no change')},
+        choiceTwoFunction: () => {build.farmPlot.rate *= 2}
+
+    },
+    crowsGift: {
+        alertText: 'the crows have returned to repay your gift--a plethora of rabbits, perfect for jerky',
+        buttonOneText: 'thank you',
+        buttonTwoText: 'we are in your debt',
+        choiceOneResultText: 'caw',
+        choiceTwoResultText: 'caw caw',
+        choiceOneFunction: () => {build.food.count *= 1.25},
+        choiceTwoFunction: () => {build.food.count *= 1.25}
+
     }
 }
 /*
@@ -122,12 +147,11 @@ const winCheck = () => {
     }
 }
 
-// intervals for initiation later
 // interval at which farms produce food
 const foodInterval = setInterval(()=> {
     if (!isPaused) {
         // console.log(farmPlots)
-        build.food.count += (build.farmPlot.count * .002)
+        build.food.count += (build.farmPlot.count * build.farmPlot.rate)
         // console.log(food)
         foodNum.innerText = `${Math.floor(build.food.count)}`
     }
@@ -153,9 +177,9 @@ const startTimer = () => {
     const timerMechanism = setInterval(()=>{
         if (!isPaused) {
             if (timer < 75) {
-                timer++
+                timer += .5
             } else {
-                timer += 1.5
+                timer += .75
             }
             seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
             // console.log(timer)
@@ -180,7 +204,7 @@ const startTimer = () => {
                 winCheck()
             }
         }
-    },5000)
+    },100) // change back to 2500
 }
 
 /*
@@ -231,10 +255,24 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('the game is paused:',isPaused)
     })
 
-    // const crows = setInterval(() => {
-        if ($(build.farmPlot.count == 2)) {
-            createScenario(scenarios.scenarioOne)
-            // clearInterval(crows)
+    const crowsCheck = setInterval(() => {
+        if (build.farmPlot.count == 2) {
+            createScenario(scenarios.crows)
+            clearInterval(crowsCheck)
         }
-    // }, 10)
+    }, 10)
+
+    const summerFarmingCheck = setInterval(() => {
+        if (timer == 26) {
+            createScenario(scenarios.summerFarming)
+            clearInterval(summerFarmingCheck)
+        }
+    }, 10)
+
+    const crowsGiftCheck = setInterval(() => {
+        if (timer >= 80 && crowsFavor) {
+            createScenario(scenarios.crowsGift)
+            clearInterval(crowsGiftCheck)
+        }
+    }, 10)
 })

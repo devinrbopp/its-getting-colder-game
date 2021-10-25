@@ -124,6 +124,17 @@ const createScenario = (scenarioNumber) => {
     })
 }
 
+// scenario listener RETURN TO THIS LATER
+// const scenarioListener = (scenarioNumber, criteria) => {
+//     const checker = setInterval(() => {
+//         console.log('checking for crows')
+//         if (criteria) {
+//             createScenario(scenarioNumber)
+//             clearInterval(checker)
+//         }
+//     }, 10)
+// }
+
 /*
 =====GAME FUNCTIONS=====
 */
@@ -221,16 +232,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // build shelter event listener
-    buildShelter.addEventListener('click', () => {
-        if (!isPaused) {
-            if (build.food.count >= build.shelter.cost) {
-                build.shelter.count++
-                shelterNum.innerText = build.shelter.count
-                build.food.count -= build.shelter.cost
-            }
+    // make build shelter button appear
+    const addBuildShelter = setInterval(() => {
+        if (build.food.count >= 10) {
+            const buildShelterButton = document.createElement('button')
+            buildShelterButton.setAttribute('id', 'buildShelter')
+            buildShelterButton.innerText = 'build shelter'
+            controls.appendChild(buildShelterButton)
+            // build shelter event listener
+            buildShelter.addEventListener('click', () => {
+                if (!isPaused) {
+                    if (build.food.count >= build.shelter.cost) {
+                        build.shelter.count++
+                        shelterNum.innerText = build.shelter.count
+                        build.food.count -= build.shelter.cost
+                    }
+                }
+            })
+            clearInterval(addBuildShelter)
         }
-    })
+    }, 10)
+    
 
     // build farm plot event listener
     buildFarmPlot.addEventListener('click', () => {
@@ -263,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10)
 
     const summerFarmingCheck = setInterval(() => {
-        if (timer == 26) {
+        if (timer >= 26) {
             createScenario(scenarios.summerFarming)
             clearInterval(summerFarmingCheck)
         }

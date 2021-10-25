@@ -72,19 +72,16 @@ const addPerson = () =>{
     if (build.population.count < build.shelter.count * 5) {
         build.population.count++
         console.log('population',build.population.count)
+        populationNum.innerText = build.population.count
     }
 }
 
-intervalRandomizer(addPerson, 10000, 5000)
-
-// const populationInterval = setInterval(() => {
-//     setTimeout(addPerson,(Math.random() * 20000))
-// }, 20000)
+intervalRandomizer(addPerson, 7000, 3000)
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
     // console.log('timer started')
-    seasonDisplay.innerText = `${season}, ${Math.floor(timer)}%`
+    seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
     const timerMechanism = setInterval(()=>{
         if (timer < 75) {
             timer++

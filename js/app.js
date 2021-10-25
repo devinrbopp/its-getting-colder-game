@@ -30,13 +30,23 @@ const build = {
 =====EVENT SCENARIOS=====
 */
 const scenarios = {
-    scenarioOne: {
+    testScenario: {
         alertText: 'This is scenario 1',
         buttonOneText: 'This is choice 1',
         buttonTwoText: 'This is choice 2',
         choiceOneResultText: 'You chose 1',
         choiceTwoResultText: 'You chose 2',
-        timeout: 3000
+        choiceOneFunction: () => {console.log('choice 1')},
+        choiceTwoFunction: () => {console.log('choice 2')},
+    },
+    scenarioOne: {
+        alertText: 'crows are eating your crops',
+        buttonOneText: 'scare them away',
+        buttonTwoText: 'let them eat',
+        choiceOneResultText: 'the crows are mad',
+        choiceTwoResultText: 'the crow god smiles upon you',
+        choiceOneFunction: () => {console.log('no change')},
+        choiceTwoFunction: () => {build.food.count - Math.floor(build.food.count/2)}
     }
 }
 /*
@@ -55,44 +65,44 @@ const intervalRandomizer = (func, avgTime, maxDelay) => {
 
 // alert function
 const createScenario = (scenarioNumber) => {
-    setTimeout(() => {
-        // alerts pause the game
-        isPaused =  true
-        // and display a message with two choices
-        alertP.innerText = scenarioNumber.alertText
-        const choice1 = document.createElement('button')
-        choice1.innerText = scenarioNumber.buttonOneText
-        const choice2 = document.createElement('button')
-        choice2.innerText = scenarioNumber.buttonTwoText
-        alertDiv.appendChild(choice1)
-        alertDiv.appendChild(choice2)
-        // event listeners for choices 
-        choice1.addEventListener('click', () => {
-            // console.log('you chose choice one')
-            isPaused = false
-            alertP.innerText = scenarioNumber.choiceOneResultText
-            alertDiv.removeChild(choice1)
-            alertDiv.removeChild(choice2)
-            setTimeout(() => {
-                alertP.innerText = ''
-            }, 7000)
-        })
-        choice2.addEventListener('click', () => {
-            // console.log('you chose choice two')
-            isPaused = false
-            alertP.innerText = scenarioNumber.choiceTwoResultText
-            alertDiv.removeChild(choice1)
-            alertDiv.removeChild(choice2)
-            setTimeout(() => {
-                alertP.innerText = ''
-            }, 7000)
-        })
-    }, scenarioNumber.timeout)
+    // alerts pause the game
+    isPaused =  true
+    // and display a message with two choices
+    alertP.innerText = scenarioNumber.alertText
+    const choice1 = document.createElement('button')
+    choice1.innerText = scenarioNumber.buttonOneText
+    const choice2 = document.createElement('button')
+    choice2.innerText = scenarioNumber.buttonTwoText
+    alertDiv.appendChild(choice1)
+    alertDiv.appendChild(choice2)
+    // choice button event listeners that execute functions
+    // and display a result message
+    choice1.addEventListener('click', () => {
+        isPaused = false
+        alertP.innerText = scenarioNumber.choiceOneResultText
+        alertDiv.removeChild(choice1)
+        alertDiv.removeChild(choice2)
+        scenarioNumber.choiceOneFunction()
+        setTimeout(() => {
+            alertP.innerText = ''
+        }, 7000)
+    })
+    choice2.addEventListener('click', () => {
+        isPaused = false
+        alertP.innerText = scenarioNumber.choiceTwoResultText
+        alertDiv.removeChild(choice1)
+        alertDiv.removeChild(choice2)
+        scenarioNumber.choiceTwoFunction()
+        setTimeout(() => {
+            alertP.innerText = ''
+        }, 7000)
+    })
 }
 
 /*
 =====GAME FUNCTIONS=====
 */
+
 // display a message when 5 shelters are built
 const shelterTutorial = () => {
     if (build.shelter.count == 5) {
@@ -208,8 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
-
-    createScenario(scenarios.scenarioOne)
     
     // pause button
     pause.addEventListener('click', () => {
@@ -223,4 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('the game is paused:',isPaused)
     })
 
+    // const crows = setInterval(() => {
+        if ($(build.farmPlot.count == 2)) {
+            createScenario(scenarios.scenarioOne)
+            // clearInterval(crows)
+        }
+    // }, 10)
 })

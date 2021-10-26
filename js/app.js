@@ -44,6 +44,15 @@ const scenarios = {
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
+    tutorialTwo: {
+        alertText: 'now you have enough food to build your first shelter',
+        buttonOneText: 'finally a warm place to rest',
+        buttonTwoText: 'it\'s not much but it\'s home',
+        choiceOneResultText: 'build 3 shelters\nnote that the price will increase each time you build one',
+        choiceTwoResultText: 'build 3 shelters\nnote that the price will increase each time you build one',
+        choiceOneFunction: () => {console.log('no change')},
+        choiceTwoFunction: () => {console.log('no change')}
+    },
     crows: {
         alertText: 'crows are eating your crops',
         buttonOneText: 'scare them away',
@@ -286,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
     
-    // pause button
+    // pause button (may re-add later)
     // pause.addEventListener('click', () => {
     //     if (!isPaused) {
     //         isPaused = true
@@ -304,26 +313,33 @@ document.addEventListener('DOMContentLoaded', () => {
             createScenario(scenarios.tutorialOne)
             clearInterval(tutorialOneCheck)
         }
-    }, 10)
-    
+    }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+
+    const tutorialTwoCheck = setInterval(() => {
+        if (build.food.count >= 10) {
+            createScenario(scenarios.tutorialTwo)
+            clearInterval(tutorialTwoCheck)
+        }
+    }, 15)
+
     const crowsCheck = setInterval(() => {
         if (build.farmPlot.count >= 2) {
             createScenario(scenarios.crows)
             clearInterval(crowsCheck)
         }
-    }, 10)
+    }, 15)
 
     const summerFarmingCheck = setInterval(() => {
         if (timer >= 26) {
             createScenario(scenarios.summerFarming)
             clearInterval(summerFarmingCheck)
         }
-    }, 10)
+    }, 15)
 
     const crowsGiftCheck = setInterval(() => {
         if (timer >= 80 && crowsFavor) {
             createScenario(scenarios.crowsGift)
             clearInterval(crowsGiftCheck)
         }
-    }, 10)
+    }, 15)
 })

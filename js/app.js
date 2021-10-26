@@ -104,6 +104,7 @@ const createScenario = (scenarioNumber) => {
     // alerts pause the game
     isPaused =  true
     // and display a message with two choices
+    alertDiv.innerHTML = '<p id="alertP"></p>'
     alertP.innerText = scenarioNumber.alertText
     const choice1 = document.createElement('button')
     choice1.innerText = scenarioNumber.buttonOneText
@@ -121,7 +122,7 @@ const createScenario = (scenarioNumber) => {
         scenarioNumber.choiceOneFunction()
         setTimeout(() => {
             alertP.innerText = ''
-        }, 7000)
+        }, 15000)
     })
     choice2.addEventListener('click', () => {
         isPaused = false
@@ -131,7 +132,7 @@ const createScenario = (scenarioNumber) => {
         scenarioNumber.choiceTwoFunction()
         setTimeout(() => {
             alertP.innerText = ''
-        }, 7000)
+        }, 15000)
     })
 }
 
@@ -180,7 +181,7 @@ const foodInterval = setInterval(()=> {
 }, 10)
 
 const consumptionInterval = setInterval(()=> {
-    if (!isPaused) {
+    if (!isPaused && build.food.count > 1) { // > 1 due to Math.floor errors
         build.food.count -= build.population.count * build.population.rate
         foodNum.innerText= `${Math.floor(build.food.count)}`
     }

@@ -34,7 +34,8 @@ const build = {
     foodStorage: {
         count: 0,
         cost: 30,
-        priceIncrease: 1.2
+        priceIncrease: 1.2,
+        storage: 50
     }
 }
 /*
@@ -199,13 +200,19 @@ const winCheck = () => {
 
 // interval at which farms produce food; starts here with the start of the game
 const foodInterval = setInterval(()=> {
-    if (!isPaused) {
+    if (!isPaused && build.food.count < build.food.max) {
         // console.log(farmPlots)
         build.food.count += (build.farmPlot.count * build.farmPlot.rate)
         // console.log(food)
         foodNum.innerText = `${Math.floor(build.food.count)}`
     }
 }, 10)
+
+const foodMax = setInterval(()=> {
+    if(!isPaused) {
+        build.food.max = 100 + (build.foodStorage.count * build.foodStorage.storage)
+    }
+})
 
 const consumptionInterval = setInterval(()=> {
     if (!isPaused && build.food.count > 1) { // > 1 due to Math.floor errors

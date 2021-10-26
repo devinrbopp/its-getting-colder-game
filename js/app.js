@@ -62,6 +62,15 @@ const scenarios = {
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
+    tutorialFour: {
+        alertText: 'excellent. you are on your own now. best of luck',
+        buttonOneText: 'thank you',
+        buttonTwoText: 'will we survive?',
+        choiceOneResultText: 'it has been a pleasure',
+        choiceTwoResultText: 'we\'ll see',
+        choiceOneFunction: () => {startTimer()},
+        choiceTwoFunction: () => {startTimer()}
+    },
     crows: {
         alertText: 'crows are eating your crops',
         buttonOneText: 'scare them away',
@@ -336,6 +345,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (build.shelter.count >= 3) {
             createScenario(scenarios.tutorialThree)
             clearInterval(tutorialThreeCheck)
+        }
+    }, 15)
+
+    const tutorialFourCheck = setInterval(() => {
+        if (build.farmPlot.count >= 3) {
+            createScenario(scenarios.tutorialFour)
+            clearInterval(tutorialFourCheck)
         }
     }, 15)
 

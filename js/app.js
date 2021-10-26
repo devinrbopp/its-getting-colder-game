@@ -102,6 +102,22 @@ const scenarios = {
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {build.farmPlot.rate *= 2}
     },
+    summerFire: {
+        alertText: 'the summer is unusually warm and dry, and a fire strikes your community',
+        buttonOneText: 'evacuate',
+        buttonTwoText: 'save the food',
+        choiceOneResultText: 'your people are safe, but you lose two silos and the food within',
+        choiceTwoResultText: 'you manage to save the food with minimal damage to the silo, but you lost 5 people in the inferno',
+        choiceOneFunction: () => {
+            build.foodStorage.count -= 2
+            foodStorageNum.innerText = build.foodStorage.count
+            build.food.count -= build.foodStorage.storage * 2
+        },
+        choiceTwoFunction: () => {
+            build.population.count -= 5
+        }
+
+    },
     crowsGift: {
         alertText: 'the crows have returned to repay your gift--a plethora of rabbits, perfect for jerky',
         buttonOneText: 'thank you',
@@ -324,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (build.farmPlot.count >= 8) {
             const buildFoodStorageButton = document.createElement('button')
             buildFoodStorageButton.setAttribute('id', 'buildFoodStorage')
-            buildFoodStorageButton.innerText = 'build food storage'
+            buildFoodStorageButton.innerText = 'build silo'
             controls.appendChild(buildFoodStorageButton)
             // build farm plot event listener
             buildFoodStorage.addEventListener('click', () => {
@@ -334,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         foodStorageNum.innerText = build.foodStorage.count
                         build.food.count -= build.foodStorage.cost
                         build.foodStorage.cost = Math.floor(build.foodStorage.cost*build.foodStorage.priceIncrease)
-                        console.log('food storage now costs', build.foodStorage.cost)
+                        console.log('silo now costs', build.foodStorage.cost)
                     }
                 }
             })
@@ -363,42 +379,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
 
     const tutorialTwoCheck = setInterval(() => {
-        if (build.food.count >= 10) {
+        if (build.food.count >= 10 && !isPaused) {
             createScenario(scenarios.tutorialTwo)
             clearInterval(tutorialTwoCheck)
         }
     }, 15)
 
     const tutorialThreeCheck = setInterval(() => {
-        if (build.shelter.count >= 3) {
+        if (build.shelter.count >= 3 && !isPaused) {
             createScenario(scenarios.tutorialThree)
             clearInterval(tutorialThreeCheck)
         }
     }, 15)
 
     const tutorialFourCheck = setInterval(() => {
-        if (build.farmPlot.count >= 3) {
+        if (build.farmPlot.count >= 3 && !isPaused) {
             createScenario(scenarios.tutorialFour)
             clearInterval(tutorialFourCheck)
         }
     }, 15)
 
     const crowsCheck = setInterval(() => {
-        if (build.farmPlot.count >= 8) {
+        if (build.farmPlot.count >= 8 && !isPaused) {
             createScenario(scenarios.crows)
             clearInterval(crowsCheck)
         }
     }, 3000)
 
     const summerFarmingCheck = setInterval(() => {
-        if (timer >= 26) {
+        if (timer >= 26 && !isPaused) {
             createScenario(scenarios.summerFarming)
             clearInterval(summerFarmingCheck)
         }
     }, 3000)
 
+    const summerFireCheck = setInterval(() => {
+        if (build.foodStorage.count >= 2 && 
+            build.food.count >= (build.foodStorage.storage * 2) && 
+            build.population.count > 10 && 
+            timer >= 30 && 
+            timer < 50 && 
+            !isPaused) {
+            createScenario(scenarios.summerFire)
+            clearInterval(summerFireCheck)
+        }
+    }, 3000)
+
     const crowsGiftCheck = setInterval(() => {
-        if (timer >= 80 && crowsFavor) {
+        if (timer >= 80 && crowsFavor && !isPaused) {
             createScenario(scenarios.crowsGift)
             clearInterval(crowsGiftCheck)
         }

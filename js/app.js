@@ -148,6 +148,7 @@ const createScenario = (scenarioNumber) => {
     isPaused =  true
     // and display a message with two choices
     outcome.innerText = ''
+    alertDiv.style.display = 'block'
     alertDiv.innerHTML = '<p id="alertP"></p>'
     alertP.innerText = scenarioNumber.alertText
     const choice1 = document.createElement('button')
@@ -160,6 +161,7 @@ const createScenario = (scenarioNumber) => {
     // and display a result message
     choice1.addEventListener('click', () => {
         isPaused = false
+        alertDiv.style.display = 'none'
         alertP.innerText = ''
         outcome.innerText = scenarioNumber.choiceOneResultText
         alertDiv.removeChild(choice1)
@@ -171,6 +173,7 @@ const createScenario = (scenarioNumber) => {
     })
     choice2.addEventListener('click', () => {
         isPaused = false
+        alertDiv.style.display = 'none'
         alertP.innerText = ''
         outcome.innerText = scenarioNumber.choiceTwoResultText
         alertDiv.removeChild(choice1)
@@ -378,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
             createScenario(scenarios.tutorialOne)
             clearInterval(tutorialOneCheck)
         }
-    }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+    }, 20) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
 
     const tutorialTwoCheck = setInterval(() => {
         if (build.food.count >= 10 && !isPaused) {

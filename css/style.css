@@ -2,14 +2,30 @@ body {
     font-family: helvetica;
     background-color: #525252;
     color: whitesmoke;
-    margin: 100px;
 }
 
 button {
     margin: 0 10px 0 0;
 }
 
+#body {
+    display: grid;
+    position: relative;
+    margin: 100px 0 0 100px;
+    z-index: 1;
+}
+
+#alertP {
+    margin: 0 0 10px 0;
+}
+
 #alertDiv {
     background: lightslategray;
-
+    border: black solid;
+    position: absolute;
+    margin: 110px 0 0 120px;
+    width: 60%;
+    z-index: 2;
+    padding: 10px;
+    display: block
 }

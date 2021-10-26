@@ -8,3 +8,9 @@ body {
 button {
     margin: 0 10px 0 0;
 }
+
+#alertDiv {
+    margin-top: 10px;
+    background: lightslategray;
+    padding: 10px;
+}

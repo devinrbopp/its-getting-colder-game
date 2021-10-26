@@ -15,7 +15,8 @@ const build = {
     food: {
         count: 0,
         cost: 0,
-        winPoints: 0
+        winPoints: 0,
+        max: 100
     },
     shelter: {
         count: 0,
@@ -28,6 +29,11 @@ const build = {
         cost: 10,
         winPoints: 2,
         rate: .005,
+        priceIncrease: 1.2
+    },
+    foodStorage: {
+        count: 0,
+        cost: 30,
         priceIncrease: 1.2
     }
 }
@@ -58,7 +64,10 @@ const scenarios = {
         buttonOneText: 'good idea',
         buttonTwoText: 'if we must',
         choiceOneResultText: 'start building farm plots\none farm plot will sustain one shelter\'s worth of people',
-        choiceTwoResultText: 'i\'m not a fan of that attitude\nstart building farm plots\none farm plot will sustain one shelter\'s worth of people',
+        choiceTwoResultText: `
+            i\'m not a fan of that attitude\nstart building farm plots\n
+            one farm plot will sustain one shelter\'s worth of people
+        `,
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
@@ -226,7 +235,7 @@ const startTimer = () => {
             if (timer < 75) {
                 timer += .5
             } else {
-                timer += .75
+                timer += .6
             }
             seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
             // console.log(timer)
@@ -249,11 +258,11 @@ const startTimer = () => {
                 winCheck()
             }
         }
-    },500) // change back to 2500
+    }, 2500) // set to 2500--every 5 sec = 1%
 }
 
 /*
-===========================EVENT LISTENERS, ALERT INTERVALS, AND FUNCTION CALLS===========================
+==================EVENT LISTENERS, ALERT INTERVALS, AND FUNCTION CALLS==================
 */
 document.addEventListener('DOMContentLoaded', () => {
     // event listener to mark end of tutorial and start of timer
@@ -312,7 +321,29 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             clearInterval(addBuildFarmPlot)
         }
-    })
+    }, 10)
+
+    const addBuildFoodStorage = setInterval(() => {
+        if (build.farmPlot.count >= 8) {
+            const buildFoodStorageButton = document.createElement('button')
+            buildFoodStorageButton.setAttribute('id', 'buildFoodStorage')
+            buildFoodStorageButton.innerText = 'build food storage'
+            controls.appendChild(buildFoodStorageButton)
+            // build farm plot event listener
+            buildFoodStorage.addEventListener('click', () => {
+                if (!isPaused) {
+                    if (build.food.count >= build.foodStorage.cost) {
+                        build.foodStorage.count++
+                        foodStorageNum.innerText = build.foodStorage.count
+                        build.food.count -= build.foodStorage.cost
+                        build.foodStorage.cost = Math.floor(build.foodStorage.cost*build.foodStorage.priceIncrease)
+                        console.log('food storage now costs', build.foodStorage.cost)
+                    }
+                }
+            })
+            clearInterval(addBuildFoodStorage)
+        }
+    }, 10)
     
     // pause button (may re-add later)
     // pause.addEventListener('click', () => {

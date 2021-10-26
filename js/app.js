@@ -35,6 +35,15 @@ const build = {
 ============================EVENT SCENARIOS=============================
 */
 const scenarios = {
+    tutorialOne: {
+        alertText: 'this is an alert\nwhile these alerts are onscreen, the game will pause for you to click either button',
+        buttonOneText: 'click me',
+        buttonTwoText: 'or me to continue',
+        choiceOneResultText: 'very good\nnow gather 10 food',
+        choiceTwoResultText: 'very good\nnow gather 10 food',
+        choiceOneFunction: () => {console.log('no change')},
+        choiceTwoFunction: () => {console.log('no change')}
+    },
     crows: {
         alertText: 'crows are eating your crops',
         buttonOneText: 'scare them away',
@@ -133,14 +142,14 @@ const createScenario = (scenarioNumber) => {
 */
 
 // display a message when 5 shelters are built
-const shelterTutorial = () => {
-    if (build.shelter.count == 5) {
-        console.log('5 shelters built')
-        startTimer()
-        // this will need to change later--don't want to use removeEventListener
-        window.removeEventListener('click',shelterTutorial)
-    }
-}
+// const shelterTutorial = () => {
+//     if (build.shelter.count == 5) {
+//         console.log('5 shelters built')
+//         startTimer()
+//         // this will need to change later--don't want to use removeEventListener
+//         window.removeEventListener('click',shelterTutorial)
+//     }
+// }
 
 // simple win check placeholder
 const winCheck = () => {
@@ -220,7 +229,7 @@ const startTimer = () => {
 */
 document.addEventListener('DOMContentLoaded', () => {
     // event listener to mark end of tutorial and start of timer
-    window.addEventListener('click',shelterTutorial)
+    // window.addEventListener('click',shelterTutorial)
     // starts the interval for population increase
     intervalRandomizer(addPerson, 7000, 3000)
     
@@ -289,7 +298,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //     console.log('the game is paused:',isPaused)
     // })
 
-    // listen for curcumstances to be met for events
+    // listen for circumstances to be met for events
+    const tutorialOneCheck = setInterval(() => {
+        if (timer) {
+            createScenario(scenarios.tutorialOne)
+            clearInterval(tutorialOneCheck)
+        }
+    }, 10)
+    
     const crowsCheck = setInterval(() => {
         if (build.farmPlot.count >= 2) {
             createScenario(scenarios.crows)

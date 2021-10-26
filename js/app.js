@@ -116,7 +116,6 @@ const scenarios = {
         choiceTwoFunction: () => {
             build.population.count -= 5
         }
-
     },
     crowsGift: {
         alertText: 'the crows have returned to repay your gift--a plethora of rabbits, perfect for jerky',

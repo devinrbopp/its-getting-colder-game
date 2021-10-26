@@ -4,7 +4,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Special+Elite&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
         <title>it's getting colder</title>
     </head>
@@ -12,12 +14,13 @@
         <div id="alertDiv">
             <p id="alertP"></p>
         </div>
-        <div id="body">
-            <div id='introText'>
-                <h1>it's getting colder</h1>
-            <p>your community has just survived a devastating winter</p>
-            <p>now, it is time to rebuild</p>
-        </div>
+        <div id="game">
+            <h1>it's getting colder</h1>
+            <h2>your community has just survived a devastating winter<br/>now, it is time to rebuild</h2>
+            <div id='outcome'>
+                <p>your community has just survived a devastating winter</p>
+                <p>now, it is time to rebuild</p>
+             </div>
         
         <div id='controls'>
             <button id="gatherFood">gather food</button>
@@ -32,14 +35,11 @@
             <div id='shelterCounter'>shelters: <span id='shelterNum'></span></div>
             <div id='farmPlotCounter'>farm plots: <span id='farmPlotNum'></span></div>
             <div id='foodStorageCounter'>silos: <span id='foodStorageNum'></span></div>
-        </div>
-
-        <div id="outcome"></div>
-        
+        </div>        
         <div id='seasonDisplay'></div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
     <script src="js/app.js"></script>
 </body>
 </html>

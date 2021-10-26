@@ -147,6 +147,7 @@ const createScenario = (scenarioNumber) => {
     // alerts pause the game
     isPaused =  true
     // and display a message with two choices
+    outcome.innerText = ''
     alertDiv.innerHTML = '<p id="alertP"></p>'
     alertP.innerText = scenarioNumber.alertText
     const choice1 = document.createElement('button')
@@ -159,7 +160,8 @@ const createScenario = (scenarioNumber) => {
     // and display a result message
     choice1.addEventListener('click', () => {
         isPaused = false
-        alertP.innerText = scenarioNumber.choiceOneResultText
+        alertP.innerText = ''
+        outcome.innerText = scenarioNumber.choiceOneResultText
         alertDiv.removeChild(choice1)
         alertDiv.removeChild(choice2)
         scenarioNumber.choiceOneFunction()
@@ -169,7 +171,8 @@ const createScenario = (scenarioNumber) => {
     })
     choice2.addEventListener('click', () => {
         isPaused = false
-        alertP.innerText = scenarioNumber.choiceTwoResultText
+        alertP.innerText = ''
+        outcome.innerText = scenarioNumber.choiceTwoResultText
         alertDiv.removeChild(choice1)
         alertDiv.removeChild(choice2)
         scenarioNumber.choiceTwoFunction()

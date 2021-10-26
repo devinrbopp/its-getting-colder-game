@@ -9,7 +9,8 @@ let crowsFavor = false
 // buildable items
 const build = {
     population: {
-        count: 0
+        count: 0,
+        rate: .001
     },
     food: {
         count: 0,
@@ -19,13 +20,15 @@ const build = {
     shelter: {
         count: 0,
         cost: 10,
-        winPoints: 1
+        winPoints: 1,
+        priceIncrease: 1.2
     },
     farmPlot: {
         count: 0,
         cost: 10,
         winPoints: 2,
-        rate: .002
+        rate: .005,
+        priceIncrease: 1.2
     }
 }
 /*
@@ -158,6 +161,13 @@ const foodInterval = setInterval(()=> {
     }
 }, 10)
 
+const consumptionInterval = setInterval(()=> {
+    if (!isPaused) {
+        build.food.count -= build.population.count * build.population.rate
+        foodNum.innerText= `${Math.floor(build.food.count)}`
+    }
+}, 10)
+
 // intervals at which people move into shelters (every 10 seconds)
 const addPerson = () =>{
     if (!isPaused) {
@@ -202,7 +212,7 @@ const startTimer = () => {
                 winCheck()
             }
         }
-    },100) // change back to 2500
+    },500) // change back to 2500
 }
 
 /*
@@ -235,6 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         build.shelter.count++
                         shelterNum.innerText = build.shelter.count
                         build.food.count -= build.shelter.cost
+                        build.shelter.cost = Math.floor(build.shelter.cost*build.shelter.priceIncrease)
+                        console.log('shelters now cost', build.shelter.cost)
                     }
                 }
             })
@@ -256,6 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         build.farmPlot.count++
                         farmPlotNum.innerText = build.farmPlot.count
                         build.food.count -= build.farmPlot.cost
+                        build.farmPlot.cost = Math.floor(build.farmPlot.cost*build.farmPlot.priceIncrease)
+                        console.log('farms now cost', build.farmPlot.cost)
                     }
                 }
             })

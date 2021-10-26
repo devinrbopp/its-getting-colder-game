@@ -179,16 +179,6 @@ const createScenario = (scenarioNumber) => {
 =================================GAME FUNCTIONS=================================
 */
 
-// display a message when 5 shelters are built
-// const shelterTutorial = () => {
-//     if (build.shelter.count == 5) {
-//         console.log('5 shelters built')
-//         startTimer()
-//         // this will need to change later--don't want to use removeEventListener
-//         window.removeEventListener('click',shelterTutorial)
-//     }
-// }
-
 // simple win check placeholder
 const winCheck = () => {
     if (build.food.count > 10 && build.shelter.count > 10) {

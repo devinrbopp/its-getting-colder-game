@@ -19,18 +19,16 @@ Primary game layout will consist of a series of buttons allowing you to take act
 
 
 ### MVP Goals
-* a year of gameplay, consisting of three 'events' per season
+* a year of gameplay, consisting of basic gameplay and series of events
 * the option to name your community and other elements as they are added
 * branching story events, based on player decisions during each event
 * a system of iterators that generate resources based on the contents of the community
-* a basic HTML canvas that displays the contents of the village
-* randomly second one of two win conditions at the end of the game, and notify the player of whether they won
+* test for win conditions at the end of the game, and notify the player of whether they won
 * basic sound effects triggered by events
 
 ### Stretch Goals
-* basic 'physics' for the canvas, so that items drop in from the top
+* a basic HTML canvas that displays the contents of the village
 * longer seasons, with the option to select the number of events per season
 * more potential win conditions, influenced by player decisions during events
-* snow animation on the canvas as winter approaches
 
 #### Bugs

@@ -1,7 +1,7 @@
 /*
 ==========================GLOBAL VARIABLES==========================
 */
-let timer = 1
+let timer = 0
 let season = 'spring'
 let isPaused = false
 let crowsFavor = false
@@ -11,7 +11,7 @@ let alertLoaded = false
 const build = {
     population: {
         count: 0,
-        rate: .001
+        rate: .001 // rrate that people consume food
     },
     food: {
         count: 0,
@@ -29,14 +29,14 @@ const build = {
         count: 0,
         cost: 10,
         winPoints: 2,
-        rate: .005,
+        rate: .005, // rate that farms produce food
         priceIncrease: 1.2
     },
-    foodStorage: {
+    foodStorage: { // called 'silo' in game
         count: 0,
         cost: 30,
         priceIncrease: 1.2,
-        storage: 50
+        storage: 50 // added storage capacity for silo
     }
 }
 /*
@@ -145,8 +145,8 @@ const intervalRandomizer = (func, avgTime, maxDelay) => {
 // alert function
 const createScenario = (scenarioNumber) => {
     // alerts pause the game
-    isPaused =  true
-    alertLoaded = true
+    isPaused =  true // pauses game running
+    alertLoaded = true // used to deactivate the pause button during an alert
     // and display a message with two choices
     outcome.innerText = ''
     alertDiv.style.display = 'block'
@@ -170,9 +170,6 @@ const createScenario = (scenarioNumber) => {
         outcome.innerText = scenarioNumber.choiceOneResultText
         scenarioNumber.choiceOneFunction()
         alertLoaded = false
-        // setTimeout(() => {
-        //     alertP.innerText = ''
-        // }, 7000)
     })
     choice2.addEventListener('click', () => {
         isPaused = false
@@ -181,9 +178,6 @@ const createScenario = (scenarioNumber) => {
         outcome.innerText = scenarioNumber.choiceTwoResultText
         scenarioNumber.choiceTwoFunction()
         alertLoaded = false
-        // setTimeout(() => {
-        //     alertP.innerText = ''
-        // }, 7000)
     })
 }
 
@@ -212,7 +206,7 @@ const winCheck = () => {
 }
 
 // interval at which farms produce food; starts here with the start of the game
-const foodInterval = setInterval(()=> {
+const foodInterval = setInterval( () => {
     if (!isPaused && build.food.count < build.food.max) {
         // console.log(farmPlots)
         build.food.count += (build.farmPlot.count * build.farmPlot.rate)
@@ -220,13 +214,15 @@ const foodInterval = setInterval(()=> {
     }
 }, 10)
 
-const foodMax = setInterval(()=> {
+// refreshes the value of build.food.max
+const foodMax = setInterval( () => {
     if(!isPaused) {
         build.food.max = 100 + (build.foodStorage.count * build.foodStorage.storage)
     }
-})
+}, 10)
 
-const consumptionInterval = setInterval(()=> {
+// refreshes the rate at which food is consumed
+const consumptionInterval = setInterval( () => {
     if (!isPaused && build.food.count > 1) { // > 1 due to Math.floor errors
         build.food.count -= build.population.count * build.population.rate
     }
@@ -237,7 +233,6 @@ const addPerson = () =>{
     if (!isPaused) {
         if (build.population.count < build.shelter.count * 5) {
             build.population.count++
-            // console.log('population',build.population.count)
         }
     }
 }
@@ -245,17 +240,13 @@ const addPerson = () =>{
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
-    // console.log('timer started')
-    seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
+    progressBar.innerText = `${season}\n${Math.floor(timer)}%`
+    progressBarBorder.style.display = 'block'
     console.log('timer started')
-    const timerMechanism = setInterval(()=>{
+    const timerMechanism = setInterval( () =>{
         if (!isPaused) {
-            // if (timer < 75) {
             timer += .5
-            // } else {
-            //     timer += .6
-            // }
-            seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
+            progressBar.innerText = `${season}\n${Math.floor(timer)}%`
             // console.log(timer)
             if (timer < 25) {
                 // console.log('spring')
@@ -288,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // starts the interval for population increase
     intervalRandomizer(addPerson, 7000, 3000)
     
-    // gather food event listener
+    // gather food button event listener
     gatherFood.addEventListener('click', () => {
         if (!isPaused) {
             build.food.count++
@@ -302,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             buildShelterButton.setAttribute('id', 'buildShelter')
             buildShelterButton.innerText = 'build shelter'
             controls.appendChild(buildShelterButton)
-            // build shelter event listener
+            // build shelter button event listener
             buildShelter.addEventListener('click', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.shelter.cost) {
@@ -324,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
             buildFarmPlotButton.setAttribute('id', 'buildFarmPlot')
             buildFarmPlotButton.innerText = 'build farm plot'
             controls.appendChild(buildFarmPlotButton)
-            // build farm plot event listener
+            // build farm plot button event listener
             buildFarmPlot.addEventListener('click', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.farmPlot.cost) {
@@ -346,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
             buildFoodStorageButton.setAttribute('id', 'buildFoodStorage')
             buildFoodStorageButton.innerText = 'build silo'
             controls.appendChild(buildFoodStorageButton)
-            // build farm plot event listener
+            // build silo button event listener
             buildFoodStorage.addEventListener('click', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.foodStorage.cost) {
@@ -361,9 +352,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 10)
     
-    // pause button (may re-add later)
+    // pause button
     pause.addEventListener('click', () => {
-        if (!alertLoaded) {
+        if (!alertLoaded) { // pause button won't work when an alert is onscreen
             if (!isPaused) {
                 isPaused = true
                 pause.innerText = 'unpause'
@@ -386,6 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
         farmPlotCost.innerText = build.farmPlot.cost
         foodStorageNum.innerText = build.foodStorage.count
         foodStorageCost.innerText = build.foodStorage.cost
+        progressBar.style.width = `${timer}%`
+        console.log(`${timer}%`)
     }, 50)
 
     // listen for circumstances to be met for events

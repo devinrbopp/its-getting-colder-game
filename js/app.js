@@ -5,6 +5,7 @@ let timer = 1
 let season = 'spring'
 let isPaused = false
 let crowsFavor = false
+let alertLoaded = false
 
 // buildable items
 const build = {
@@ -145,6 +146,7 @@ const intervalRandomizer = (func, avgTime, maxDelay) => {
 const createScenario = (scenarioNumber) => {
     // alerts pause the game
     isPaused =  true
+    alertLoaded = true
     // and display a message with two choices
     outcome.innerText = ''
     alertDiv.style.display = 'block'
@@ -167,6 +169,7 @@ const createScenario = (scenarioNumber) => {
         alertDiv.innerHTML = ''
         outcome.innerText = scenarioNumber.choiceOneResultText
         scenarioNumber.choiceOneFunction()
+        alertLoaded = false
         // setTimeout(() => {
         //     alertP.innerText = ''
         // }, 7000)
@@ -177,6 +180,7 @@ const createScenario = (scenarioNumber) => {
         alertDiv.innerHTML = ''
         outcome.innerText = scenarioNumber.choiceTwoResultText
         scenarioNumber.choiceTwoFunction()
+        alertLoaded = false
         // setTimeout(() => {
         //     alertP.innerText = ''
         // }, 7000)
@@ -358,16 +362,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10)
     
     // pause button (may re-add later)
-    // pause.addEventListener('click', () => {
-    //     if (!isPaused) {
-    //         isPaused = true
-    //         pause.innerText = 'unpause'
-    //     } else {
-    //         isPaused = false
-    //         pause.innerText = 'pause'
-    //     }
-    //     console.log('the game is paused:',isPaused)
-    // })
+    pause.addEventListener('click', () => {
+        if (!alertLoaded) {
+            if (!isPaused) {
+                isPaused = true
+                pause.innerText = 'unpause'
+            } else {
+                isPaused = false
+                pause.innerText = 'pause'
+            }
+            console.log('the game is paused:',isPaused)
+        }
+    })
 
     // DISPLAY UPDATES
     const villageContentRefresh = setInterval(() => {

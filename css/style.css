@@ -77,3 +77,7 @@ button {
     flex-wrap: wrap;
     margin-top: 15px;
 }
+
+#pauseDiv {
+    margin-top: 15px;
+}

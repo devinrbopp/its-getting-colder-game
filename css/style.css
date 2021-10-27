@@ -21,20 +21,23 @@ h2 {
 #controls {
     display: flex;
     flex: auto;
+    flex-wrap: wrap;
     margin-top: 10px;
+    gap: 10px;
 }
 
 button {
     font-family: 'Special Elite', cursive;
     flex-wrap: wrap;
     flex: none;
-    margin: 0 10px 0 0;
-    padding: 10px 8px 8px 8px;
+    gap: 10px;
+    padding: 12px 8px 8px 8px;
     color: white;
     background-image: url(../images/gravel.jpg);
-    border-radius: 3px;
+    border-radius: 7px;
     justify-content: flex-start;
     background-position: center;
+    font-size: 20px;
 }
 
 #game {
@@ -50,13 +53,22 @@ button {
 
 #alertDiv {
     background: rgb(86, 99, 111);
-    border: gray solid;
+    /* border: gray solid; */
     position: absolute;
     margin: 15% 0 0 15%;
-    width: 60%;
+    width: 50%;
     z-index: 2;
     padding: 10px;
     display: block;
     filter: drop-shadow(0px 0px 30px black);
-    border-radius: 4px;
+    border-radius: 7px;
+    display: flex;
+    gap: 10px;
+}
+
+#buttonDiv {
+    display: flex;
+    gap: 10px;
+    flex: auto;
+    flex-wrap: wrap;
 }

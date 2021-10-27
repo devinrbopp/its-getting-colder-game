@@ -149,14 +149,15 @@ const createScenario = (scenarioNumber) => {
     // and display a message with two choices
     outcome.innerText = ''
     alertDiv.style.display = 'block'
-    alertDiv.innerHTML = '<p id="alertP"></p>'
+    alertDiv.innerHTML = '<p id="alertP"></p><div id="buttonDiv"></div>'
     alertP.innerText = scenarioNumber.alertText
     const choice1 = document.createElement('button')
     choice1.innerText = scenarioNumber.buttonOneText
     const choice2 = document.createElement('button')
     choice2.innerText = scenarioNumber.buttonTwoText
-    alertDiv.appendChild(choice1)
-    alertDiv.appendChild(choice2)
+
+    buttonDiv.appendChild(choice1)
+    buttonDiv.appendChild(choice2)
     // choice button event listeners that execute functions
     // and display a result message
     choice1.addEventListener('click', () => {

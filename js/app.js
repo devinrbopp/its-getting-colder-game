@@ -11,7 +11,7 @@ let alertLoaded = false
 const build = {
     population: {
         count: 0,
-        rate: .001 // rrate that people consume food
+        rate: .001 // rate that people consume food
     },
     food: {
         count: 0,
@@ -62,7 +62,7 @@ const scenarios = {
         choiceTwoFunction: () => {console.log('no change')}
     },
     tutorialThree: {
-        alertText: 'as you build shelters, more people will move in.\n\ngathering food takes time. let\'s try farming instead.',
+        alertText: 'as you build shelters, more people will move in, and they will need to eat.\n\ngathering food takes time. let\'s try farming instead.',
         buttonOneText: 'good idea',
         buttonTwoText: 'if we must',
         choiceOneResultText: 'start building farm plots.\n\none farm plot will sustain one shelter\'s worth of people.',
@@ -411,6 +411,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const crowsCheck = setInterval(() => {
         if (build.farmPlot.count >= 8 && !isPaused) {
             createScenario(scenarios.crows)
+            const crowsAudio = new Audio('audio/mixkit-wild-raven-bird-calling-62.wav')
+            crowsAudio.play()
             clearInterval(crowsCheck)
         }
     }, 3000)

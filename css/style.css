@@ -82,7 +82,7 @@ button {
     margin-top: 15px;
 }
 
-#progressBarBorder{
+#progressBarBorder {
     display: none;
     height: 50px;
     border-color: black;
@@ -90,11 +90,12 @@ button {
     border-width: 2px;
     border-radius: 7px;
     margin-top: 15px;
+    background:#686868;
 }
 
 #progressBar{
     height: 100%;
-    background: black;
+    background: #black;
 }
 
 #progressBarText {

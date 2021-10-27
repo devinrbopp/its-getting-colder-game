@@ -44,50 +44,50 @@ const build = {
 */
 const scenarios = {
     tutorialOne: {
-        alertText: 'you have just gathered your first food',
+        alertText: 'you have just gathered your first food.',
         buttonOneText: 'click me',
         buttonTwoText: 'or me to continue',
-        choiceOneResultText: 'very good\n\nnow gather 10 food',
-        choiceTwoResultText: 'very good\n\nnow gather 10 food',
+        choiceOneResultText: 'very good.\n\nnow gather 10 food.',
+        choiceTwoResultText: 'very good.\n\nnow gather 10 food.',
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
     tutorialTwo: {
-        alertText: 'now you have enough food to build your first shelter',
+        alertText: 'now you have enough food to build your first shelter.',
         buttonOneText: 'finally a warm place to rest',
         buttonTwoText: 'it\'s not much but it\'s home',
-        choiceOneResultText: 'build 3 shelters\n\nnote that the price will increase each time you build one',
-        choiceTwoResultText: 'build 3 shelters\n\nnote that the price will increase each time you build one',
+        choiceOneResultText: 'build 3 shelters.\n\nnote that the price will increase each time you build one.',
+        choiceTwoResultText: 'build 3 shelters.\n\nnote that the price will increase each time you build one.',
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
     tutorialThree: {
-        alertText: 'as you build shelters, more people will move in\n\ngathering food takes time. let\'s try farming instead',
+        alertText: 'as you build shelters, more people will move in.\n\ngathering food takes time. let\'s try farming instead.',
         buttonOneText: 'good idea',
         buttonTwoText: 'if we must',
-        choiceOneResultText: 'start building farm plots\n\none farm plot will sustain one shelter\'s worth of people',
+        choiceOneResultText: 'start building farm plots.\n\none farm plot will sustain one shelter\'s worth of people.',
         choiceTwoResultText: `
-            i\'m not a fan of that attitude\n\nstart building farm plots\n\n
-            one farm plot will sustain one shelter\'s worth of people
+            i\'m not a fan of that attitude.\n\nstart building farm plots.\n\n
+            one farm plot will sustain one shelter\'s worth of people.
         `,
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
     tutorialFour: {
-        alertText: 'excellent. you are on your own now. best of luck',
+        alertText: 'excellent. you are on your own now. best of luck.',
         buttonOneText: 'thank you',
         buttonTwoText: 'will we survive?',
-        choiceOneResultText: 'it has been a pleasure',
-        choiceTwoResultText: 'we\'ll see',
+        choiceOneResultText: 'it has been a pleasure.',
+        choiceTwoResultText: 'we\'ll see.',
         choiceOneFunction: () => {startTimer()},
         choiceTwoFunction: () => {startTimer()}
     },
     crows: {
-        alertText: 'crows are eating your crops',
+        alertText: 'crows are eating your crops.',
         buttonOneText: 'scare them away',
         buttonTwoText: 'let them eat',
-        choiceOneResultText: 'the crows are mad',
-        choiceTwoResultText: `the crow god smiles upon you\nlose half of your food & gain the favor of the crows`,
+        choiceOneResultText: 'the crows are mad.',
+        choiceTwoResultText: `the crow god smiles upon you.\n\nlose half of your food & gain the favor of the crows.`,
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {
             build.food.count /= 2
@@ -95,7 +95,7 @@ const scenarios = {
         }
     },
     summerFarming: {
-        alertText: 'what will you grow in your farms',
+        alertText: 'what will you grow in your farms?',
         buttonOneText: 'strawberries',
         buttonTwoText: 'potatoes',
         choiceOneResultText: 'you enjoy the delicious red fruit',
@@ -104,11 +104,11 @@ const scenarios = {
         choiceTwoFunction: () => {build.farmPlot.rate *= 2}
     },
     summerFire: {
-        alertText: 'the summer is unusually warm and dry, and a fire strikes your community',
+        alertText: 'the summer is unusually warm and dry, and a fire strikes your community.',
         buttonOneText: 'evacuate',
         buttonTwoText: 'save the food',
-        choiceOneResultText: 'your people are safe, but you lose two silos and the food within',
-        choiceTwoResultText: 'you manage to save the food with minimal damage to the silo, but you lost 5 people in the inferno',
+        choiceOneResultText: 'your people are safe, but you lose two silos and the food within.',
+        choiceTwoResultText: 'you manage to save the food with minimal damage to the silo, but you lost 5 people in the inferno.',
         choiceOneFunction: () => {
             build.foodStorage.count -= 2
             build.food.count -= build.foodStorage.storage * 2
@@ -118,11 +118,11 @@ const scenarios = {
         }
     },
     crowsGift: {
-        alertText: 'the crows have returned to repay your gift--a plethora of rabbits, perfect for jerky',
+        alertText: 'the crows have returned to repay your gift: a plethora of rabbits, perfect for jerky.',
         buttonOneText: 'thank you',
         buttonTwoText: 'we are in your debt',
-        choiceOneResultText: 'caw',
-        choiceTwoResultText: 'caw caw',
+        choiceOneResultText: 'caw caw caw.',
+        choiceTwoResultText: 'caw caw.',
         choiceOneFunction: () => {build.food.count *= 1.5},
         choiceTwoFunction: () => {build.food.count *= 1.5}
     }
@@ -236,7 +236,6 @@ const addPerson = () =>{
         }
     }
 }
-
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {

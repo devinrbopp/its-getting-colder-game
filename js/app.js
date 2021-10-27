@@ -110,7 +110,6 @@ const scenarios = {
         choiceTwoResultText: 'you manage to save the food with minimal damage to the silo, but you lost 5 people in the inferno',
         choiceOneFunction: () => {
             build.foodStorage.count -= 2
-            foodStorageNum.innerText = build.foodStorage.count
             build.food.count -= build.foodStorage.storage * 2
         },
         choiceTwoFunction: () => {
@@ -216,7 +215,6 @@ const foodInterval = setInterval(()=> {
         // console.log(farmPlots)
         build.food.count += (build.farmPlot.count * build.farmPlot.rate)
         // console.log(food)
-        foodNum.innerText = `${Math.floor(build.food.count)}`
     }
 }, 10)
 
@@ -229,7 +227,6 @@ const foodMax = setInterval(()=> {
 const consumptionInterval = setInterval(()=> {
     if (!isPaused && build.food.count > 1) { // > 1 due to Math.floor errors
         build.food.count -= build.population.count * build.population.rate
-        foodNum.innerText= `${Math.floor(build.food.count)}`
     }
 }, 10)
 
@@ -239,7 +236,6 @@ const addPerson = () =>{
         if (build.population.count < build.shelter.count * 5) {
             build.population.count++
             // console.log('population',build.population.count)
-            populationNum.innerText = build.population.count
         }
     }
 }
@@ -308,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.shelter.cost) {
                         build.shelter.count++
-                        shelterNum.innerText = build.shelter.count
                         build.food.count -= build.shelter.cost
                         build.shelter.cost = Math.floor(build.shelter.cost*build.shelter.priceIncrease)
                         console.log('shelters now cost', build.shelter.cost)
@@ -331,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.farmPlot.cost) {
                         build.farmPlot.count++
-                        farmPlotNum.innerText = build.farmPlot.count
                         build.food.count -= build.farmPlot.cost
                         build.farmPlot.cost = Math.floor(build.farmPlot.cost*build.farmPlot.priceIncrease)
                         console.log('farms now cost', build.farmPlot.cost)
@@ -353,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.foodStorage.cost) {
                         build.foodStorage.count++
-                        foodStorageNum.innerText = build.foodStorage.count
                         build.food.count -= build.foodStorage.cost
                         build.foodStorage.cost = Math.floor(build.foodStorage.cost*build.foodStorage.priceIncrease)
                         console.log('silo now costs', build.foodStorage.cost)
@@ -376,13 +369,22 @@ document.addEventListener('DOMContentLoaded', () => {
     //     console.log('the game is paused:',isPaused)
     // })
 
+    // DISPLAY UPDATES
+    const villageContentRefresh = setInterval(() => {
+        foodNum.innerText = build.food.count
+        populationNum.innerText = build.population.count
+        shelterNum.innerText = build.shelter.count
+        farmPlotNum.innerText = build.farmPlot.count
+        foodStorageNum.innerText = build.foodStorage.count
+    }, 50)
+
     // listen for circumstances to be met for events
     const tutorialOneCheck = setInterval(() => {
         if (timer) {
             createScenario(scenarios.tutorialOne)
             clearInterval(tutorialOneCheck)
         }
-    }, 20) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+    }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
 
     const tutorialTwoCheck = setInterval(() => {
         if (build.food.count >= 10 && !isPaused) {

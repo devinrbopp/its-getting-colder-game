@@ -240,13 +240,13 @@ const addPerson = () =>{
 
 // startTimer kicks off the interval function that cycles through the seasons
 const startTimer = () => {
-    progressBar.innerText = `${season}\n${Math.floor(timer)}%`
+    progressBarText.innerText = `${season}\n${Math.floor(timer)}%`
     progressBarBorder.style.display = 'block'
     console.log('timer started')
     const timerMechanism = setInterval( () =>{
         if (!isPaused) {
             timer += .5
-            progressBar.innerText = `${season}\n${Math.floor(timer)}%`
+            progressBarText.innerText = `${season}\n${Math.floor(timer)}%`
             // console.log(timer)
             if (timer < 25) {
                 // console.log('spring')
@@ -263,7 +263,7 @@ const startTimer = () => {
             } else if (timer >= 100) {
                 console.log('game over')
                 seasonDisplay.innerText = 'winter is here.'
-                isPaused = true
+                clearInterval(timerMechanism)
                 winCheck()
             }
         }
@@ -378,7 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
         foodStorageNum.innerText = build.foodStorage.count
         foodStorageCost.innerText = build.foodStorage.cost
         progressBar.style.width = `${timer}%`
-        console.log(`${timer}%`)
     }, 50)
 
     // listen for circumstances to be met for events

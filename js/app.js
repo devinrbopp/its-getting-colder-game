@@ -43,7 +43,7 @@ const build = {
 */
 const scenarios = {
     tutorialOne: {
-        alertText: 'this is an alert\nwhile these alerts are onscreen, the game will pause for you to click either button',
+        alertText: 'you have just gathered your first food',
         buttonOneText: 'click me',
         buttonTwoText: 'or me to continue',
         choiceOneResultText: 'very good\nnow gather 10 food',
@@ -162,10 +162,8 @@ const createScenario = (scenarioNumber) => {
     choice1.addEventListener('click', () => {
         isPaused = false
         alertDiv.style.display = 'none'
-        alertP.innerText = ''
+        alertDiv.innerHTML = ''
         outcome.innerText = scenarioNumber.choiceOneResultText
-        alertDiv.removeChild(choice1)
-        alertDiv.removeChild(choice2)
         scenarioNumber.choiceOneFunction()
         // setTimeout(() => {
         //     alertP.innerText = ''
@@ -174,10 +172,8 @@ const createScenario = (scenarioNumber) => {
     choice2.addEventListener('click', () => {
         isPaused = false
         alertDiv.style.display = 'none'
-        alertP.innerText = ''
+        alertDiv.innerHTML = ''
         outcome.innerText = scenarioNumber.choiceTwoResultText
-        alertDiv.removeChild(choice1)
-        alertDiv.removeChild(choice2)
         scenarioNumber.choiceTwoFunction()
         // setTimeout(() => {
         //     alertP.innerText = ''
@@ -245,13 +241,14 @@ const addPerson = () =>{
 const startTimer = () => {
     // console.log('timer started')
     seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
+    console.log('timer started')
     const timerMechanism = setInterval(()=>{
         if (!isPaused) {
-            if (timer < 75) {
-                timer += .5
-            } else {
-                timer += .6
-            }
+            // if (timer < 75) {
+            timer += .5
+            // } else {
+            //     timer += .6
+            // }
             seasonDisplay.innerText = `${season} ${Math.floor(timer)}%`
             // console.log(timer)
             if (timer < 25) {
@@ -336,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 10)
 
+    // add build silo button after 8 farm plots are built
     const addBuildFoodStorage = setInterval(() => {
         if (build.farmPlot.count >= 8) {
             const buildFoodStorageButton = document.createElement('button')
@@ -371,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // DISPLAY UPDATES
     const villageContentRefresh = setInterval(() => {
-        foodNum.innerText = build.food.count
+        foodNum.innerText = Math.floor(build.food.count)
         populationNum.innerText = build.population.count
         shelterNum.innerText = build.shelter.count
         farmPlotNum.innerText = build.farmPlot.count
@@ -380,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // listen for circumstances to be met for events
     const tutorialOneCheck = setInterval(() => {
-        if (timer) {
+        if (build.food.count >= 1 && !isPaused) {
             createScenario(scenarios.tutorialOne)
             clearInterval(tutorialOneCheck)
         }

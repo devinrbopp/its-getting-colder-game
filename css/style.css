@@ -47,8 +47,13 @@ button {
     z-index: 1;
 }
 
+#outcome {
+    margin: 10px 0;
+}
+
 #alertP {
-    margin: 0 0 10px 0;
+    margin: 0;
+    padding: 10px 0 0 0;
 }
 
 #alertDiv {
@@ -70,4 +75,5 @@ button {
     gap: 10px;
     flex: auto;
     flex-wrap: wrap;
+    margin-top: 15px;
 }

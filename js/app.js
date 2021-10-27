@@ -46,8 +46,8 @@ const scenarios = {
         alertText: 'you have just gathered your first food',
         buttonOneText: 'click me',
         buttonTwoText: 'or me to continue',
-        choiceOneResultText: 'very good\nnow gather 10 food',
-        choiceTwoResultText: 'very good\nnow gather 10 food',
+        choiceOneResultText: 'very good\n\nnow gather 10 food',
+        choiceTwoResultText: 'very good\n\nnow gather 10 food',
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
@@ -55,18 +55,18 @@ const scenarios = {
         alertText: 'now you have enough food to build your first shelter',
         buttonOneText: 'finally a warm place to rest',
         buttonTwoText: 'it\'s not much but it\'s home',
-        choiceOneResultText: 'build 3 shelters\nnote that the price will increase each time you build one',
-        choiceTwoResultText: 'build 3 shelters\nnote that the price will increase each time you build one',
+        choiceOneResultText: 'build 3 shelters\n\nnote that the price will increase each time you build one',
+        choiceTwoResultText: 'build 3 shelters\n\nnote that the price will increase each time you build one',
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
     tutorialThree: {
-        alertText: 'as you build shelters, more people will move in\ngathering food takes time. let\'s try farming instead',
+        alertText: 'as you build shelters, more people will move in\n\ngathering food takes time. let\'s try farming instead',
         buttonOneText: 'good idea',
         buttonTwoText: 'if we must',
-        choiceOneResultText: 'start building farm plots\none farm plot will sustain one shelter\'s worth of people',
+        choiceOneResultText: 'start building farm plots\n\none farm plot will sustain one shelter\'s worth of people',
         choiceTwoResultText: `
-            i\'m not a fan of that attitude\nstart building farm plots\n
+            i\'m not a fan of that attitude\n\nstart building farm plots\n\n
             one farm plot will sustain one shelter\'s worth of people
         `,
         choiceOneFunction: () => {console.log('no change')},
@@ -154,9 +154,11 @@ const createScenario = (scenarioNumber) => {
     choice1.innerText = scenarioNumber.buttonOneText
     const choice2 = document.createElement('button')
     choice2.innerText = scenarioNumber.buttonTwoText
-
-    buttonDiv.appendChild(choice1)
-    buttonDiv.appendChild(choice2)
+    // buttons appear on a delay to avoid accidental clicks
+    setTimeout(() => {
+        buttonDiv.appendChild(choice1)
+        buttonDiv.appendChild(choice2)
+    }, 1500)
     // choice button event listeners that execute functions
     // and display a result message
     choice1.addEventListener('click', () => {
@@ -370,10 +372,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // DISPLAY UPDATES
     const villageContentRefresh = setInterval(() => {
         foodNum.innerText = Math.floor(build.food.count)
+        foodCapacity.innerText = build.food.max
         populationNum.innerText = build.population.count
         shelterNum.innerText = build.shelter.count
+        shelterCost.innerText = build.shelter.cost
         farmPlotNum.innerText = build.farmPlot.count
+        farmPlotCost.innerText = build.farmPlot.cost
         foodStorageNum.innerText = build.foodStorage.count
+        foodStorageCost.innerText = build.foodStorage.cost
     }, 50)
 
     // listen for circumstances to be met for events

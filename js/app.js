@@ -26,6 +26,10 @@ const summerFireAudio = new Audio('audio/mixkit-big-fire-burning-1335.wav')
 
 const genericAlertAudio = new Audio('audio/mixkit-gravel-stones-small-avalanche-1273.wav')
 
+const winAudio = new Audio('audio/winAudio.mp3')
+const loseAudio = new Audio('audio/lose.mp3')
+
+
 // buildable items
 const build = {
     population: {
@@ -114,8 +118,8 @@ const scenarios = {
         alertText: 'what will you grow in your farms?',
         buttonOneText: 'strawberries',
         buttonTwoText: 'potatoes',
-        choiceOneResultText: 'you enjoy the delicious red fruit',
-        choiceTwoResultText: 'a practical choice. you can store them for the winter\nfood production speed doubled',
+        choiceOneResultText: 'you enjoy the delicious red fruit.',
+        choiceTwoResultText: 'a practical choice. you can store them for the winter.\n\nfood production speed doubled.',
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {build.farmPlot.rate *= 2}
     },
@@ -228,9 +232,11 @@ const clickSound = () => {
 
 const winCheck = () => {
     if (build.food.count >= (build.population.count * 10)) {
-        outcome.innerText = 'winter is here.\n\nyou will survive the winter'
+        outcome.innerText = 'winter is here.\n\nyou will survive the winter.'
+        winAudio.play()
     } else {
         outcome.innerText = 'winter is here.\n\nyou do not enough food to survive the winter.'
+        loseAudio.play()
     }
 }
 
@@ -305,6 +311,7 @@ const startTimer = () => {
 document.addEventListener('DOMContentLoaded', () => {
     // event listener to mark end of tutorial and start of timer
     // window.addEventListener('click',shelterTutorial)
+    
     // starts the interval for population increase
     intervalRandomizer(addPerson, 7000, 3000)
     

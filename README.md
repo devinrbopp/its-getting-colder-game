@@ -10,6 +10,14 @@ It is spring, and your community has just weathered a devastating winter. Now, t
 
 Layout is handed with CSS Grid.
 
+### Features
+* full tutorial that gradually rolls out features using DOM manipulation
+* a series of iterators that continuously update values onscreen, including item costs, quantities, and rates of production
+* a javascript framework for producing pop-up events with functions executed by player choices; event are triggered by both the timer and by player behavior
+* sound effects triggered by clicks and events
+* win/loss conditions tested when the end of the timeline is reached
+* flexbox and css grid responsivity
+
 ### Future Updates
 * further events
 * an HTML canvas display that reflects the changes in the community and small animations

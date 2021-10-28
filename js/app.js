@@ -27,7 +27,7 @@ const summerFireAudio = new Audio('audio/mixkit-big-fire-burning-1335.wav')
 const genericAlertAudio = new Audio('audio/mixkit-gravel-stones-small-avalanche-1273.wav')
 
 const winAudio = new Audio('audio/winAudio.mp3')
-const loseAudio = new Audio('audio/lose.mp3')
+const loseAudio = new Audio('audio/loseAudio.mp3')
 
 
 // buildable items
@@ -302,7 +302,7 @@ const startTimer = () => {
                 isPaused = true
             }
         }
-    }, 2500) // set to 2500--every 5 sec = 1%
+    }, 10) // set to 2500--every 5 sec = 1%
 }
 
 

@@ -20,6 +20,8 @@ const clickAudio9 = new Audio('audio/button-v4.mp3')
 const clickAudio10 = new Audio('audio/button-v2.mp3')
 const clickAudio11 = new Audio('audio/button-v6.mp3')
 
+const crowsAudio = new Audio('audio/mixkit-wild-raven-bird-calling-62.wav')
+
 const summerFireAudio = new Audio('audio/mixkit-big-fire-burning-1335.wav')
 
 // buildable items
@@ -304,12 +306,13 @@ const startTimer = () => {
                 season = 'it\'s getting colder.....'
             } else if (timer >= 100) {
                 console.log('game over')
-                seasonDisplay.innerText = 'winter is here.'
+                outcome.innerText = 'winter is here.'
                 clearInterval(timerMechanism)
                 winCheck()
+                isPaused = true
             }
         }
-    }, 2500) // set to 2500--every 5 sec = 1%
+    }, 100) // set to 2500--every 5 sec = 1%
 }
 
 /*
@@ -463,7 +466,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const crowsCheck = setInterval(() => {
         if (build.farmPlot.count >= 8 && !isPaused) {
             createScenario(scenarios.crows)
-            const crowsAudio = new Audio('audio/mixkit-wild-raven-bird-calling-62.wav')
             crowsAudio.play()
             clearInterval(crowsCheck)
         }

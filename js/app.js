@@ -6,6 +6,21 @@ let season = 'spring'
 let isPaused = false
 let crowsFavor = false
 let alertLoaded = false
+let clicks = 0
+
+const clickAudio1 = new Audio('audio/mixkit-metal-button-radio-ping-2544.wav')
+const clickAudio2 = new Audio('audio/button-v2.mp3')
+const clickAudio3 = new Audio('audio/button-v3.mp3')
+const clickAudio4 = new Audio('audio/button-v4.mp3')
+const clickAudio5 = new Audio('audio/button-v5.mp3')
+const clickAudio6 = new Audio('audio/button-v6.mp3')
+const clickAudio7 = new Audio('audio/button-v3.mp3')
+const clickAudio8 = new Audio('audio/button-v5.mp3')
+const clickAudio9 = new Audio('audio/button-v4.mp3')
+const clickAudio10 = new Audio('audio/button-v2.mp3')
+const clickAudio11 = new Audio('audio/button-v6.mp3')
+
+const summerFireAudio = new Audio('audio/mixkit-big-fire-burning-1335.wav')
 
 // buildable items
 const build = {
@@ -165,6 +180,7 @@ const createScenario = (scenarioNumber) => {
     // and display a result message
     choice1.addEventListener('click', () => {
         isPaused = false
+        clickSound()
         alertDiv.style.display = 'none'
         alertDiv.innerHTML = ''
         outcome.innerText = scenarioNumber.choiceOneResultText
@@ -173,6 +189,7 @@ const createScenario = (scenarioNumber) => {
     })
     choice2.addEventListener('click', () => {
         isPaused = false
+        clickSound()
         alertDiv.style.display = 'none'
         alertDiv.innerHTML = ''
         outcome.innerText = scenarioNumber.choiceTwoResultText
@@ -197,6 +214,32 @@ const createScenario = (scenarioNumber) => {
 */
 
 // simple win check placeholder
+const clickSound = () => {
+    if (clicks % 11 == 0) {
+        clickAudio1.play()
+    } else if (clicks % 11 == 1) {
+        clickAudio2.play()
+    } else if (clicks % 11 == 2) {
+        clickAudio3.play()
+    } else if (clicks % 11 == 3) {
+        clickAudio4.play()
+    } else if (clicks % 11 == 4) {
+        clickAudio5.play()
+    } else if (clicks % 11 == 5) {
+        clickAudio6.play()
+    } else if (clicks % 11 == 6) {
+        clickAudio7.play()
+    } else if (clicks % 11 == 7) {
+        clickAudio8.play()
+    } else if (clicks % 11 == 8) {
+        clickAudio9.play()
+    } else if (clicks % 11 == 9) {
+        clickAudio10.play()
+    } else if (clicks % 11 == 10) {
+        clickAudio11.play()
+    }
+}
+
 const winCheck = () => {
     if (build.food.count > 10 && build.shelter.count > 10) {
         console.log('you win')
@@ -278,9 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // starts the interval for population increase
     intervalRandomizer(addPerson, 7000, 3000)
     
+    window.addEventListener('click', () => {
+        clicks++
+    })
     // gather food button event listener
     gatherFood.addEventListener('click', () => {
         if (!isPaused) {
+            clickSound()
             build.food.count++
         }
     })
@@ -296,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             buildShelter.addEventListener('click', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.shelter.cost) {
+                        clickSound()
                         build.shelter.count++
                         build.food.count -= build.shelter.cost
                         build.shelter.cost = Math.floor(build.shelter.cost*build.shelter.priceIncrease)
@@ -318,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
             buildFarmPlot.addEventListener('click', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.farmPlot.cost) {
+                        clickSound()
                         build.farmPlot.count++
                         build.food.count -= build.farmPlot.cost
                         build.farmPlot.cost = Math.floor(build.farmPlot.cost*build.farmPlot.priceIncrease)
@@ -340,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             buildFoodStorage.addEventListener('click', () => {
                 if (!isPaused) {
                     if (build.food.count >= build.foodStorage.cost) {
+                        clickSound()
                         build.foodStorage.count++
                         build.food.count -= build.foodStorage.cost
                         build.foodStorage.cost = Math.floor(build.foodStorage.cost*build.foodStorage.priceIncrease)
@@ -355,9 +405,11 @@ document.addEventListener('DOMContentLoaded', () => {
     pause.addEventListener('click', () => {
         if (!alertLoaded) { // pause button won't work when an alert is onscreen
             if (!isPaused) {
+                clickSound()
                 isPaused = true
                 pause.innerText = 'unpause'
             } else {
+                clickSound()
                 isPaused = false
                 pause.innerText = 'pause'
             }
@@ -431,13 +483,15 @@ document.addEventListener('DOMContentLoaded', () => {
             timer >= 30 && 
             timer < 50 && 
             !isPaused) {
-            createScenario(scenarios.summerFire)
-            clearInterval(summerFireCheck)
+                summerFireAudio.play()
+                createScenario(scenarios.summerFire)
+                clearInterval(summerFireCheck)
         }
     }, 3000)
 
     const crowsGiftCheck = setInterval(() => {
         if (timer >= 80 && crowsFavor && !isPaused) {
+            crowsAudio.play()
             createScenario(scenarios.crowsGift)
             clearInterval(crowsGiftCheck)
         }

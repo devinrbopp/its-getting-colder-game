@@ -45,6 +45,8 @@ button {
     position: relative;
     margin: 10% 0 0 10%;
     z-index: 1;
+    width: 80%;
+    max-width: 650px;
 }
 
 #outcome {
@@ -62,6 +64,7 @@ button {
     position: absolute;
     margin: 15% 0 0 15%;
     width: 50%;
+    max-width: 500px;
     z-index: 2;
     padding: 15px;
     display: none;

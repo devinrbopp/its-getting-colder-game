@@ -8,6 +8,7 @@ let crowsFavor = false
 let alertLoaded = false
 let clicks = 0
 
+// audio
 const clickAudio1 = new Audio('audio/mixkit-metal-button-radio-ping-2544.wav')
 const clickAudio2 = new Audio('audio/button-v2.mp3')
 const clickAudio3 = new Audio('audio/button-v3.mp3')
@@ -56,9 +57,9 @@ const build = {
         storage: 50 // added storage capacity for silo
     }
 }
-/*
-============================EVENT SCENARIOS=============================
-*/
+
+//============================EVENT SCENARIOS=============================
+
 const scenarios = {
     tutorialOne: {
         alertText: 'you have just gathered your first food.',
@@ -145,9 +146,7 @@ const scenarios = {
     }
 }
 
-/*
-===========================REUSABLE FUNCTIONS===========================
-*/
+//===========================REUSABLE FUNCTIONS===========================
 
 // intervalRandomizer creates the sense that something occurs at random intervals
 // it triggers setTimeout using setInterval
@@ -200,20 +199,7 @@ const createScenario = (scenarioNumber) => {
     })
 }
 
-// scenario listener RETURN TO THIS LATER
-// const scenarioListener = (scenarioNumber, criteria) => {
-//     const checker = setInterval(() => {
-//         console.log('checking for crows')
-//         if (criteria) {
-//             createScenario(scenarioNumber)
-//             clearInterval(checker)
-//         }
-//     }, 10)
-// }
-
-/*
-=================================GAME FUNCTIONS=================================
-*/
+//=================================GAME FUNCTIONS=================================
 
 // simple win check placeholder
 const clickSound = () => {
@@ -243,10 +229,10 @@ const clickSound = () => {
 }
 
 const winCheck = () => {
-    if (build.food.count > 10 && build.shelter.count > 10) {
-        console.log('you win')
+    if (build.food.count >= (build.population.count * 10)) {
+        outcome.innerText = 'winter is here.\n\nyou will survive the winter'
     } else {
-        console.log('you lose')
+        outcome.innerText = 'winter is here.\n\nyou do not enough food to survive the winter.'
     }
 }
 
@@ -306,9 +292,9 @@ const startTimer = () => {
                 season = 'it\'s getting colder.....'
             } else if (timer >= 100) {
                 console.log('game over')
-                outcome.innerText = 'winter is here.'
                 clearInterval(timerMechanism)
                 winCheck()
+                pauseDiv.style.display = 'none'
                 isPaused = true
             }
         }

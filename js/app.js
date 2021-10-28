@@ -1,6 +1,5 @@
-/*
-==========================GLOBAL VARIABLES==========================
-*/
+// ==========================GLOBAL VARIABLES==========================
+
 let timer = 0
 let season = 'spring'
 let isPaused = false
@@ -24,6 +23,8 @@ const clickAudio11 = new Audio('audio/button-v6.mp3')
 const crowsAudio = new Audio('audio/mixkit-wild-raven-bird-calling-62.wav')
 
 const summerFireAudio = new Audio('audio/mixkit-big-fire-burning-1335.wav')
+
+const genericAlertAudio = new Audio('audio/mixkit-gravel-stones-small-avalanche-1273.wav')
 
 // buildable items
 const build = {
@@ -58,7 +59,7 @@ const build = {
     }
 }
 
-//============================EVENT SCENARIOS=============================
+// ============================EVENT SCENARIOS=============================
 
 const scenarios = {
     tutorialOne: {
@@ -84,10 +85,7 @@ const scenarios = {
         buttonOneText: 'good idea',
         buttonTwoText: 'if we must',
         choiceOneResultText: 'start building farm plots.\n\none farm plot will sustain one shelter\'s worth of people.',
-        choiceTwoResultText: `
-            i\'m not a fan of that attitude.\n\nstart building farm plots.\n\n
-            one farm plot will sustain one shelter\'s worth of people.
-        `,
+        choiceTwoResultText: `i\'m not a fan of that attitude.\n\nstart building farm plots.\n\none farm plot will sustain one shelter\'s worth of people.`,
         choiceOneFunction: () => {console.log('no change')},
         choiceTwoFunction: () => {console.log('no change')}
     },
@@ -146,7 +144,7 @@ const scenarios = {
     }
 }
 
-//===========================REUSABLE FUNCTIONS===========================
+// ===========================REUSABLE FUNCTIONS===========================
 
 // intervalRandomizer creates the sense that something occurs at random intervals
 // it triggers setTimeout using setInterval
@@ -199,7 +197,7 @@ const createScenario = (scenarioNumber) => {
     })
 }
 
-//=================================GAME FUNCTIONS=================================
+// =================================GAME FUNCTIONS=================================
 
 // simple win check placeholder
 const clickSound = () => {
@@ -298,12 +296,12 @@ const startTimer = () => {
                 isPaused = true
             }
         }
-    }, 100) // set to 2500--every 5 sec = 1%
+    }, 2500) // set to 2500--every 5 sec = 1%
 }
 
-/*
-==================EVENT LISTENERS, ALERT INTERVALS, AND FUNCTION CALLS==================
-*/
+
+// ==================EVENT LISTENERS, ALERT INTERVALS, AND FUNCTION CALLS==================
+
 document.addEventListener('DOMContentLoaded', () => {
     // event listener to mark end of tutorial and start of timer
     // window.addEventListener('click',shelterTutorial)
@@ -406,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // DISPLAY UPDATES
+    // display refresh
     const villageContentRefresh = setInterval(() => {
         foodNum.innerText = Math.floor(build.food.count)
         foodCapacity.innerText = build.food.max
@@ -424,6 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tutorialOneCheck = setInterval(() => {
         if (build.food.count >= 1 && !isPaused) {
             createScenario(scenarios.tutorialOne)
+            genericAlertAudio.play()
             clearInterval(tutorialOneCheck)
         }
     }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
@@ -431,6 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tutorialTwoCheck = setInterval(() => {
         if (build.food.count >= 10 && !isPaused) {
             createScenario(scenarios.tutorialTwo)
+            genericAlertAudio.play()
             clearInterval(tutorialTwoCheck)
         }
     }, 15)
@@ -438,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tutorialThreeCheck = setInterval(() => {
         if (build.shelter.count >= 3 && !isPaused) {
             createScenario(scenarios.tutorialThree)
+            genericAlertAudio.play()
             clearInterval(tutorialThreeCheck)
         }
     }, 15)
@@ -445,6 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tutorialFourCheck = setInterval(() => {
         if (build.farmPlot.count >= 3 && !isPaused) {
             createScenario(scenarios.tutorialFour)
+            genericAlertAudio.play()
             clearInterval(tutorialFourCheck)
         }
     }, 15)
@@ -460,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const summerFarmingCheck = setInterval(() => {
         if (timer >= 26 && !isPaused) {
             createScenario(scenarios.summerFarming)
+            genericAlertAudio.play()
             clearInterval(summerFarmingCheck)
         }
     }, 3000)
@@ -481,6 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (timer >= 80 && crowsFavor && !isPaused) {
             crowsAudio.play()
             createScenario(scenarios.crowsGift)
+            crowsAudio.play()
             clearInterval(crowsGiftCheck)
         }
     }, 3000)

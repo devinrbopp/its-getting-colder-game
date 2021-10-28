@@ -302,7 +302,7 @@ const startTimer = () => {
                 isPaused = true
             }
         }
-    }, 10) // set to 2500--every 5 sec = 1%
+    }, 2500) // set to 2500--every 5 sec = 1%
 }
 
 

@@ -3,7 +3,7 @@
 
 It is spring, and your community has just weathered a devastating winter. Now, to rebuild.
 
-*it's getting colder* is a text-based clicker with a timeline. You have one year to build and assemble resources to prepare for the winter to come. When it arrives, randomly generated conditions will determine whether you have survived.
+*it's getting colder* is a text-based clicker with a timeline. You have one year to build and assemble resources to prepare for the winter to come. When it arrives, the game will notify you of whether you have survived.
 
 ### Technologies
 *it's getting colder* utilizes HTML5, CSS, and Vanilla Javascript to handle interactions and logic. The primary method of interacting will be through a series of buttons. The game will also include an HTML canvas, which displays your burgeoning community.

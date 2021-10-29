@@ -1,7 +1,7 @@
 # *it's getting colder*
 ## inspired by Avery Alder's *The Quiet Year*
 
-https://devinrbopp.github.io/its-getting-colder-game/
+[Play here!](https://devinrbopp.github.io/its-getting-colder-game/)
 
 It is spring, and your community has just weathered a devastating winter. Now, to rebuild.
 

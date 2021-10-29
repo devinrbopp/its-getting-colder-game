@@ -309,9 +309,6 @@ const startTimer = () => {
 // ==================EVENT LISTENERS, ALERT INTERVALS, AND FUNCTION CALLS==================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // event listener to mark end of tutorial and start of timer
-    // window.addEventListener('click',shelterTutorial)
-    
     // starts the interval for population increase
     intervalRandomizer(addPerson, 7000, 3000)
     

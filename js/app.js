@@ -203,7 +203,6 @@ const createScenario = (scenarioNumber) => {
 
 // =================================GAME FUNCTIONS=================================
 
-// simple win check placeholder
 const clickSound = () => {
     if (clicks % 11 == 0) {
         clickAudio1.play()
@@ -230,6 +229,7 @@ const clickSound = () => {
     }
 }
 
+// simple win check placeholder
 const winCheck = () => {
     if (build.food.count >= (build.population.count * 10)) {
         outcome.innerText = 'winter is here.\n\nyou will survive the winter.'

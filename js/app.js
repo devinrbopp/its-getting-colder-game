@@ -1,11 +1,12 @@
 // ==========================GLOBAL VARIABLES==========================
 
-let timer = 0
-let season = 'spring'
-let isPaused = false
-let crowsFavor = false
-let alertLoaded = false
-let clicks = 0
+let timer
+let season
+let isPaused
+let crowsFavor
+let alertLoaded
+let clicks
+let build
 
 // audio
 const clickAudio1 = new Audio('audio/mixkit-metal-button-radio-ping-2544.wav')
@@ -30,38 +31,49 @@ const winAudio = new Audio('audio/winAudio.mp3')
 const loseAudio = new Audio('audio/loseAudio.mp3')
 
 
-// buildable items
-const build = {
-    population: {
-        count: 0,
-        rate: .001 // rate that people consume food
-    },
-    food: {
-        count: 0,
-        cost: 0,
-        winPoints: 0,
-        max: 100
-    },
-    shelter: {
-        count: 0,
-        cost: 10,
-        winPoints: 1,
-        priceIncrease: 1.2
-    },
-    farmPlot: {
-        count: 0,
-        cost: 10,
-        winPoints: 2,
-        rate: .005, // rate that farms produce food
-        priceIncrease: 1.2
-    },
-    foodStorage: { // called 'silo' in game
-        count: 0,
-        cost: 30,
-        priceIncrease: 1.2,
-        storage: 50 // added storage capacity for silo
+// buildable items (this is function so that it can be called again when reset is pressed)
+const defineVariables = () => {
+    timer = 0
+    season = 'spring'
+    isPaused = false
+    crowsFavor = false
+    alertLoaded = false
+    clicks = 0
+    
+    build = {
+        population: {
+            count: 0,
+            rate: .001 // rate that people consume food
+        },
+        food: {
+            count: 0,
+            cost: 0,
+            winPoints: 0,
+            max: 100
+        },
+        shelter: {
+            count: 0,
+            cost: 10,
+            winPoints: 1,
+            priceIncrease: 1.2
+        },
+        farmPlot: {
+            count: 0,
+            cost: 10,
+            winPoints: 2,
+            rate: .005, // rate that farms produce food
+            priceIncrease: 1.2
+        },
+        foodStorage: { // called 'silo' in game
+            count: 0,
+            cost: 30,
+            priceIncrease: 1.2,
+            storage: 50 // added storage capacity for silo
+        }
     }
 }
+
+defineVariables()
 
 // ============================EVENT SCENARIOS=============================
 
@@ -408,6 +420,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    // reset button
+    reset.addEventListener('click', () => {
+        if (!isPaused) {
+            console.log('reset clicked')
+            clickSound()
+            defineVariables()
+            outcome.innerHTML = 'your community has just survived a devastating winter.<br/><br/>now, it is time to rebuild.'
+            // restart intervals for alerts
+            clearEventCheckers()
+            eventCheckers()
+
+        }
+    })
+
     // display refresh
     const villageContentRefresh = setInterval(() => {
         foodNum.innerText = Math.floor(build.food.count)
@@ -423,73 +449,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 50)
 
     // listen for circumstances to be met for events
-    const tutorialOneCheck = setInterval(() => {
-        if (build.food.count >= 1 && !isPaused) {
-            createScenario(scenarios.tutorialOne)
-            genericAlertAudio.play()
-            clearInterval(tutorialOneCheck)
-        }
-    }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+    const eventCheckers = () => {
+        const tutorialOneCheck = setInterval(() => {
+            if (build.food.count >= 1 && !isPaused) {
+                createScenario(scenarios.tutorialOne)
+                genericAlertAudio.play()
+                clearInterval(tutorialOneCheck)
+            }
+        }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+    
+        const tutorialTwoCheck = setInterval(() => {
+            if (build.food.count >= 10 && !isPaused) {
+                createScenario(scenarios.tutorialTwo)
+                genericAlertAudio.play()
+                clearInterval(tutorialTwoCheck)
+            }
+        }, 15)
+    
+        const tutorialThreeCheck = setInterval(() => {
+            if (build.shelter.count >= 3 && !isPaused) {
+                createScenario(scenarios.tutorialThree)
+                genericAlertAudio.play()
+                clearInterval(tutorialThreeCheck)
+            }
+        }, 15)
+    
+        const tutorialFourCheck = setInterval(() => {
+            if (build.farmPlot.count >= 3 && !isPaused) {
+                createScenario(scenarios.tutorialFour)
+                genericAlertAudio.play()
+                clearInterval(tutorialFourCheck)
+            }
+        }, 15)
+    
+        const crowsCheck = setInterval(() => {
+            if (build.farmPlot.count >= 8 && !isPaused) {
+                createScenario(scenarios.crows)
+                crowsAudio.play()
+                clearInterval(crowsCheck)
+            }
+        }, 3000)
+    
+        const summerFarmingCheck = setInterval(() => {
+            if (timer >= 26 && !isPaused) {
+                createScenario(scenarios.summerFarming)
+                genericAlertAudio.play()
+                clearInterval(summerFarmingCheck)
+            }
+        }, 3000)
+    
+        const summerFireCheck = setInterval(() => {
+            if (build.foodStorage.count >= 2 && 
+                build.food.count >= (build.foodStorage.storage * 2) && 
+                build.population.count > 10 && 
+                timer >= 30 && 
+                timer < 50 && 
+                !isPaused) {
+                    summerFireAudio.play()
+                    createScenario(scenarios.summerFire)
+                    clearInterval(summerFireCheck)
+            }
+        }, 3000)
+    
+        const crowsGiftCheck = setInterval(() => {
+            console.log('checking for crows gift')
+            if (timer >= 80 && crowsFavor && !isPaused) {
+                crowsAudio.play()
+                createScenario(scenarios.crowsGift)
+                crowsAudio.play()
+                clearInterval(crowsGiftCheck)
+            }
+        }, 3000)
+    }
+    eventCheckers()
 
-    const tutorialTwoCheck = setInterval(() => {
-        if (build.food.count >= 10 && !isPaused) {
-            createScenario(scenarios.tutorialTwo)
-            genericAlertAudio.play()
-            clearInterval(tutorialTwoCheck)
-        }
-    }, 15)
-
-    const tutorialThreeCheck = setInterval(() => {
-        if (build.shelter.count >= 3 && !isPaused) {
-            createScenario(scenarios.tutorialThree)
-            genericAlertAudio.play()
-            clearInterval(tutorialThreeCheck)
-        }
-    }, 15)
-
-    const tutorialFourCheck = setInterval(() => {
-        if (build.farmPlot.count >= 3 && !isPaused) {
-            createScenario(scenarios.tutorialFour)
-            genericAlertAudio.play()
-            clearInterval(tutorialFourCheck)
-        }
-    }, 15)
-
-    const crowsCheck = setInterval(() => {
-        if (build.farmPlot.count >= 8 && !isPaused) {
-            createScenario(scenarios.crows)
-            crowsAudio.play()
-            clearInterval(crowsCheck)
-        }
-    }, 3000)
-
-    const summerFarmingCheck = setInterval(() => {
-        if (timer >= 26 && !isPaused) {
-            createScenario(scenarios.summerFarming)
-            genericAlertAudio.play()
-            clearInterval(summerFarmingCheck)
-        }
-    }, 3000)
-
-    const summerFireCheck = setInterval(() => {
-        if (build.foodStorage.count >= 2 && 
-            build.food.count >= (build.foodStorage.storage * 2) && 
-            build.population.count > 10 && 
-            timer >= 30 && 
-            timer < 50 && 
-            !isPaused) {
-                summerFireAudio.play()
-                createScenario(scenarios.summerFire)
-                clearInterval(summerFireCheck)
-        }
-    }, 3000)
-
-    const crowsGiftCheck = setInterval(() => {
-        if (timer >= 80 && crowsFavor && !isPaused) {
-            crowsAudio.play()
-            createScenario(scenarios.crowsGift)
-            crowsAudio.play()
-            clearInterval(crowsGiftCheck)
-        }
-    }, 3000)
+    const clearEventCheckers = () => {
+        clearInterval(tutorialOneCheck)
+        clearInterval(tutorialTwoCheck)
+        clearInterval(tutorialThreeCheck)
+        clearInterval(tutorialFourCheck)
+        clearInterval(crowsCheck)
+        clearInterval(summerFarmingCheck)
+        clearInterval(summerFireCheck)
+        clearInterval(crowsGiftCheck)
+    }
 })

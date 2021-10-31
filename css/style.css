@@ -81,8 +81,12 @@ button {
     margin-top: 15px;
 }
 
-#pauseDiv {
+#pauseAndReset {
     margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex: auto;
+    flex-wrap: wrap;
 }
 
 #progressBarBorder {

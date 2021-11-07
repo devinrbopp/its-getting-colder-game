@@ -29,39 +29,43 @@ const genericAlertAudio = new Audio('audio/mixkit-gravel-stones-small-avalanche-
 const winAudio = new Audio('audio/winAudio.mp3')
 const loseAudio = new Audio('audio/loseAudio.mp3')
 
-
 // buildable items
-const build = {
-    population: {
-        count: 0,
-        rate: .001 // rate that people consume food
-    },
-    food: {
-        count: 0,
-        cost: 0,
-        winPoints: 0,
-        max: 100
-    },
-    shelter: {
-        count: 0,
-        cost: 10,
-        winPoints: 1,
-        priceIncrease: 1.2
-    },
-    farmPlot: {
-        count: 0,
-        cost: 10,
-        winPoints: 2,
-        rate: .005, // rate that farms produce food
-        priceIncrease: 1.2
-    },
-    foodStorage: { // called 'silo' in game
-        count: 0,
-        cost: 30,
-        priceIncrease: 1.2,
-        storage: 50 // added storage capacity for silo
+const launchBuild = () => {
+    console.log('build launched')
+    build = {
+        population: {
+            count: 0,
+            rate: .001 // rate that people consume food
+        },
+        food: {
+            count: 0,
+            cost: 0,
+            winPoints: 0,
+            max: 100
+        },
+        shelter: {
+            count: 0,
+            cost: 10,
+            winPoints: 1,
+            priceIncrease: 1.2
+        },
+        farmPlot: {
+            count: 0,
+            cost: 10,
+            winPoints: 2,
+            rate: .005, // rate that farms produce food
+            priceIncrease: 1.2
+        },
+        foodStorage: { // called 'silo' in game
+            count: 0,
+            cost: 30,
+            priceIncrease: 1.2,
+            storage: 50 // added storage capacity for silo
+        }
     }
 }
+
+launchBuild()
 
 // ============================EVENT SCENARIOS=============================
 
@@ -405,6 +409,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 pause.innerText = 'pause'
             }
             console.log('the game is paused:',isPaused)
+        }
+    })
+
+    // reset button
+    reset.addEventListener('click', () => {
+        if (!alertLoaded) {
+            clickSound()
+            console.log('reset clicked')
+            launchBuild()
         }
     })
 

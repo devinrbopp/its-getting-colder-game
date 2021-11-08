@@ -418,6 +418,11 @@ document.addEventListener('DOMContentLoaded', () => {
             clickSound()
             console.log('reset clicked')
             launchBuild()
+            // check whether tutorial one has to be reset
+            if (tutorialOneComplete) {
+                tutorialOneComplete = false
+                tutorialOneStart()
+            }
         }
     })
 
@@ -436,13 +441,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 50)
 
     // listen for circumstances to be met for events
-    const tutorialOneCheck = setInterval(() => {
-        if (build.food.count >= 1 && !isPaused) {
-            createScenario(scenarios.tutorialOne)
-            genericAlertAudio.play()
-            clearInterval(tutorialOneCheck)
-        }
-    }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+    
+    // testing putting the intervals in an event
+    const tutorialOneStart = () => {
+        const tutorialOneCheck = setInterval(() => {
+            if (build.food.count >= 1 && !isPaused) {
+                createScenario(scenarios.tutorialOne)
+                genericAlertAudio.play()
+                clearInterval(tutorialOneCheck)
+                tutorialOneComplete = true
+            }
+        }, 15) // these are slower than the food refresh so that those numbers have time to change via DOM manipulation
+    }
+    tutorialOneStart()
+
 
     const tutorialTwoCheck = setInterval(() => {
         if (build.food.count >= 10 && !isPaused) {
